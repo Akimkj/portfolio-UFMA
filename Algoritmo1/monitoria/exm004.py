@@ -1,0 +1,11 @@
+a = float(input("Qual o tamanho do lado A? "))
+b = float(input("Qual o tamanho do lado B? "))
+c = float(input("Qual o tamanho do lado C? "))
+areaRetangulo = a * b
+print(f"RETANGULO = {areaRetangulo:,.2f}")
+areaTrapezio = ((a + b) * c) / 2
+print(f"TRAPEZIO = {areaTrapezio:,.2f}")
+areaCirculo = 3.14 * (c**2)
+print(f"CIRCULO = {areaCirculo:,.2f}")
+areaTriRetangulo = (a * c) / 2
+print(f"TRI_RETANGULO = {areaTriRetangulo:,.2f}")
