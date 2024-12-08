@@ -1,8 +1,10 @@
 def ataque(atq1, atq2, atq3, def1, def2, def3):
     atqs = [atq1, atq2, atq3]
     defs = [def1, def2, def3]
-    maiorAtq, menorAtq = max(atqs), min(atqs)
-    maiorDef, menorDef = max(defs), min(defs)
+    maiorAtq = max(atqs)
+    menorAtq = min(atqs)
+    maiorDef = max(defs)
+    menorDef = min(defs)
     meioAtq = (atq1 + atq2 + atq3) - (maiorAtq + menorAtq)
     meioDef = (def1 + def2 + def3) - (maiorDef + menorDef)
     quantAtq = 0
