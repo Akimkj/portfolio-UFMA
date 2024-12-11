@@ -3,11 +3,8 @@ def notaReposicao(nota1, nota2, nota3):
     if (media >= 70):
         return 0
     elif (media < 70):
-        menorNota = nota1
-        if (nota2 < nota1) and (nota2 < nota3):
-            menorNota = nota2
-        if (nota3 < nota1) and (nota3 < nota2):
-            menorNota = nota3
+        notas = [nota1, nota2, nota3]
+        menorNota = min(notas)
         
         restanteNota = 210 - (nota1 + nota2 + nota3)
 
