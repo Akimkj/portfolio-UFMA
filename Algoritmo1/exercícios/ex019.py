@@ -1,4 +1,4 @@
-
+'''
 def contaDigito8(nota1, nota2, nota3, nota4, nota5):
     contador = 0
     if (nota1 == 8) or (nota1 == 18) or (nota1 == 28) or (nota1 == 38) or (nota1 == 48) or (nota1 == 58) or (nota1 == 68) or (nota1 == 78) or (nota1 >= 80 and nota1 <= 89) or (nota1 == 98):
@@ -12,9 +12,9 @@ def contaDigito8(nota1, nota2, nota3, nota4, nota5):
     if (nota5 == 8) or (nota5 == 18) or (nota5 == 28) or (nota5 == 38) or (nota5 == 48) or (nota5 == 58) or (nota5 == 68) or (nota5 == 78) or (nota5 >= 80 and nota5 <= 89) or (nota5 == 98):
         contador += 1 # contador = contador + 1
     return contador
-    
-print(contaDigito8(80, 5, 18, 67, 98))
 
+print(contaDigito8(80, 5, 18, 67, 98))
+'''
 
 def temOito(num):
     if (num >= 80 and num <= 89):
