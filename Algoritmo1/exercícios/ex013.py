@@ -9,5 +9,5 @@ def fullhouse (d1, d2, d3, d4, d5):
         return True
     else:
         return False
-    
-print(fullhouse(1, 1, 4, 2, 2))
+
+print(fullhouse(1, 4, 4, 4, 1))
