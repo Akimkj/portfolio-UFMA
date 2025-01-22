@@ -1,3 +1,5 @@
+#dá erro caso o ultimo valor da lista seja um vale
+
 def vales(vetor):
     contador = 0
     for i in range(1, len(vetor)):
