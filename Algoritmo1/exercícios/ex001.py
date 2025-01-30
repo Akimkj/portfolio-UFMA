@@ -1,4 +1,4 @@
-v = [-3, 0, 1, 2, 5]              
+v = [-3, 0, 0, 2, 5]              
 
 '''def moveZeroes(nums):
     for i in nums:
@@ -7,10 +7,17 @@ v = [-3, 0, 1, 2, 5]
             nums.remove(i)
     return nums'''
 def moveZeroes(nums):
-    for i in range(len(nums)):
+    '''for i in range(len(nums)):
         for j in range(i + 1, len(nums)):
             if nums[i] == 0:
-                nums[i], nums[j] = nums[j], nums[i]
+                nums[i], nums[j] = nums[j], nums[i]'''
+    j = 0
+    for i in range(len(nums)):
+        if nums[i] != 0:
+            nums[j] = nums[i]
+            j += 1
+    for i in range(j, len(nums)):
+        nums[i] = 0
                 
     
     return nums
