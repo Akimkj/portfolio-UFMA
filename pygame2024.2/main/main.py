@@ -9,7 +9,7 @@ pygame.init()
 largura = 740
 altura = 580
 tela = pygame.display.set_mode((largura,altura))
-pygame.display.set_caption("Space Invaders (Undertale Version)")
+pygame.display.set_caption("???")
 
 
 #Loop principal do jogo
