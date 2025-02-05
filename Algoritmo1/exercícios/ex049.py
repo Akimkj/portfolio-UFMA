@@ -1,6 +1,17 @@
-def eh_palindromo(num):
-    teste = num
+def criarMatriz():
+    mat = []
+    indiceMat = 0
+    num = 1
     
-    return teste == num
+    for i in range (5):
+        mat.append([])
+        for j in range(4):
+            mat[indiceMat].append(num)
+            num += 2
+        indiceMat += 1
+    
+    return mat
 
-print(eh_palindromo(454))
+print(criarMatriz())
+    
+
