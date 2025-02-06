@@ -88,6 +88,6 @@ while rodando:
     #Mostrando o texto na tela 
     tela.blit(texto_formatado, (520, 40))
     #Atualiza a tela do jogo a cada interação (recomendável ficar no fim do loop)
-    pygame.display.update()
+    pygame.display.flip()
     
 
