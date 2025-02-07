@@ -6,8 +6,8 @@ from sys import exit
 
 pygame.init()
 
-largura_tela = 640
-altura_tela = 480
+largura_tela = 990
+altura_tela = 555
 tela = pygame.display.set_mode((largura_tela, altura_tela))
 pygame.display.set_caption("Sprites")
 relogio = pygame.time.Clock()
@@ -31,7 +31,7 @@ class Sapo(pygame.sprite.Sprite):
        self.image = self.sprites[self.atual] #atributo herdado para mostrar a moviementação da sprite.
        self.image = pygame.transform.scale(self.image, (128 *3, 64 *3)) #aumenta ou diminui a escala a sprite
        self.rect = self.image.get_rect() #trata a sprite como um retangulo
-       self.rect.topleft = 100, 100
+       self.rect.topleft = 250, 300 #posiciona o objeto na tela // x, y
 
        self.animar = False #atributo que diz quando a sprite vai animar ou não
     
@@ -47,7 +47,11 @@ class Sapo(pygame.sprite.Sprite):
             self.image = self.sprites[int(self.atual)] # a função int() é para arredondar o indice para inteiro, e evitar erro no meu código
             self.image = pygame.transform.scale(self.image, (128 *3, 64 *3))
 
+#Imagem de fundo
+imagem_fundo = pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\pantano.jpg").convert()
+imagem_fundo = pygame.transform.scale(imagem_fundo, (largura_tela, altura_tela))
 
+#criando objetos para classe
 todas_as_sprites = pygame.sprite.Group()
 sapo = Sapo()
 todas_as_sprites.add(sapo)
@@ -65,7 +69,7 @@ while rodando:
                 sapo.atacar()
                 
 
-    
+    tela.blit(imagem_fundo, (0,0))
     todas_as_sprites.draw(tela)
     todas_as_sprites.update() #atualiza o objeto da sprite na tela
     pygame.display.flip() 
