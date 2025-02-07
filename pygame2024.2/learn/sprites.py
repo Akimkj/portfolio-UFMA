@@ -14,47 +14,50 @@ relogio = pygame.time.Clock()
 
 #cria uma classe chamada Sapo que herda atributos e métodos de uma classe já pronta no pygame
 class Sapo(pygame.sprite.Sprite):
-    def __init__(self):
-       pygame.sprite.Sprite.__init__(self) #herdar caracteristicas da SpriteClass
-       self.sprites = [] #lista para armazenar todas as sprites do mesmo personagem
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_1.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_2.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_3.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_4.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_5.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_6.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_7.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_8.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_9.png"))
-       self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_10.png"))
-       self.atual = 0 #indice da lista com as sprites
-       self.image = self.sprites[self.atual] #atributo herdado para mostrar a moviementação da sprite.
-       self.image = pygame.transform.scale(self.image, (128 *3, 64 *3)) #aumenta ou diminui a escala a sprite
-       self.rect = self.image.get_rect() #trata a sprite como um retangulo
-       self.rect.topleft = 250, 300 #posiciona o objeto na tela // x, y
+    def __init__(Self):
+       super().__init__() #herdar caracteristicas da SpriteClass
+       Self.sprites = [] #lista para armazenar todas as sprites do mesmo personagem
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_1.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_2.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_3.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_4.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_5.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_6.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_7.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_8.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_9.png"))
+       Self.sprites.append(pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\sapo\\attack_10.png"))
+       Self.atual = 0 #indice da lista com as sprites
+       Self.image = Self.sprites[Self.atual] #atributo herdado para mostrar a moviementação da sprite.
+       Self.image = pygame.transform.scale(Self.image, (128 *3, 64 *3)) #aumenta ou diminui a escala a sprite
+       Self.rect = Self.image.get_rect() #trata a sprite como um retangulo
+       Self.rect.topleft = 250, 300 #posiciona o objeto na tela // x, y
 
-       self.animar = False #atributo que diz quando a sprite vai animar ou não
+       Self.animar = False #atributo que diz quando a sprite vai animar ou não
     
-    def atacar(self): #método que controla o atributo de animação
-        self.animar = True
+    def atacar(Self): #método que controla o atributo de animação
+        Self.animar = True
 
-    def update(self): #método herdado da SpriteClass
-        if self.animar == True:
-            self.atual += 0.3 # esse valor controla a velocidade da animação
-            if self.atual >= len(self.sprites):
-                self.atual = 0
-                self.animar = False
-            self.image = self.sprites[int(self.atual)] # a função int() é para arredondar o indice para inteiro, e evitar erro no meu código
-            self.image = pygame.transform.scale(self.image, (128 *3, 64 *3))
+    def update(Self): #método herdado da SpriteClass
+        if Self.animar == True:
+            Self.atual += 0.3 # esse valor controla a velocidade da animação
+            if Self.atual >= len(Self.sprites):
+                Self.atual = 0
+                Self.animar = False
+            Self.image = Self.sprites[int(Self.atual)] # a função int() é para arredondar o indice para inteiro, e evitar erro no meu código
+            Self.image = pygame.transform.scale(Self.image, (128 *3, 64 *3))
 
 #Imagem de fundo
 imagem_fundo = pygame.image.load("pygame2024.2\\learn\\stylePrototipo\\pantano.jpg").convert()
 imagem_fundo = pygame.transform.scale(imagem_fundo, (largura_tela, altura_tela))
 
 #criando objetos para classe
-todas_as_sprites = pygame.sprite.Group()
-sapo = Sapo()
-todas_as_sprites.add(sapo)
+todas_as_sprites = pygame.sprite.Group() #criando grupo para todas as classes
+sapo = Sapo() #instanciando uma classe
+todas_as_sprites.add(sapo) #adicionando
+
+for i in range(8):
+    todas_as_sprites.add(sapo)
 rodando = True
 while rodando:
     relogio.tick(60)

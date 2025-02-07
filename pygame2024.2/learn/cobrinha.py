@@ -9,6 +9,18 @@ def aumentaCobra(lista_cobra):
     for XeY in lista_cobra:
         pygame.draw.rect(tela, (0, 255, 0), (XeY[0], XeY[1], largura_cobra, altura_cobra))
 
+def reiniciar_jogo():
+    global pontos, pos_x_cobra, pos_y_cobra, pos_x_maca, pos_y_maca, lista_cabeca,lista_corpo, morreu, comprimento_inicial
+    pontos = 0
+    comprimento_inicial = 5
+    pos_x_cobra = (largura_tela // 2) - (largura_cobra // 2)
+    pos_y_cobra = (altura_tela // 2) - (altura_cobra // 2)
+    lista_corpo = []
+    lista_cabeca = []
+    pos_x_maca = randint(20, largura_tela - 20)
+    pos_y_maca = randint(20, altura_tela - 20)
+    morreu = False
+
 #janela
 largura_tela = 740
 altura_tela = 680
@@ -97,6 +109,34 @@ while True:
     lista_cabeca.append(pos_y_cobra)
     lista_corpo.append(lista_cabeca)
 
+    if lista_corpo.count(lista_cabeca) > 1:
+        fonte2 = pygame.font.SysFont('arial', 20, True, True)
+        mensagem = "Game Over! Aperte R para voltar."
+        texto_formatado = fonte2.render(mensagem, True, (0, 0, 0))
+        ret_text = texto_formatado.get_rect()
+        morreu = True
+        while morreu:
+            tela.fill((255, 255, 255))
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    exit()
+                if event.type == KEYDOWN:
+                    if event.key == K_r:
+                        reiniciar_jogo()
+            ret_text.center = (largura_tela // 2, altura_tela // 2)
+            tela.blit(texto_formatado, ret_text)
+            pygame.display.flip()
+
+
+    if pos_x_cobra > largura_tela:
+        pos_x_cobra = 0
+    if pos_x_cobra < 0:
+        pos_x_cobra = largura_tela
+    if pos_y_cobra < 0:
+        pos_y_cobra = altura_tela
+    if pos_y_cobra > altura_tela:
+        pos_y_cobra = 0
     #impõe um limite no tamanho da lista do corpo da cobra, para não crescer indefinidamente
     if len(lista_corpo) > comprimento_inicial:
         del lista_corpo[0]
