@@ -1,17 +1,18 @@
 package aulas.aula001;
 
 public class Caneta {
-	  String cor;
-	  String modelo;
-	  float tamanho;
-	  boolean tampada = true;
-	  int carga = 100;
+	  public String cor;
+	  public String modelo;
+	  private float tamanho;
+	  private boolean tampada = true;
+	  protected int carga;
 	  
 	  public Caneta() {} 
-	  public Caneta(String cor, String modelo, float tamanho) {
+	  public Caneta(String cor, String modelo, float tamanho, int carga) {
 		  this.cor = cor;
 		  this.modelo = modelo;
 		  this.tamanho = tamanho;
+		  this.carga = carga;
 	  }
 	  
 	  public void destampar() {
