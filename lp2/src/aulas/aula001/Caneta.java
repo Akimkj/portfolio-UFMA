@@ -3,7 +3,7 @@ package aulas.aula001;
 public class Caneta {
 	  public String cor;
 	  public String modelo;
-	  private float tamanho = 1.05f;
+	  public float tamanho = 1.05f;
 	  private boolean tampada = true;
 	  protected int carga;
 	  
