@@ -1,0 +1,5 @@
+
+Nome: Maria	Matricula: 24678953	Nota 1: 6.50	Nota 2: 9.00
+Nome: Mika	Matricula: 48091436	Nota 1: 7.00	Nota 2: 5.50
+Nome: Diogo	Matricula: 9457832	Nota 1: 9.20	Nota 2: 8.50
+Nome: Marina	Matricula: 18450932	Nota 1: 8.50	Nota 2: 10.00
