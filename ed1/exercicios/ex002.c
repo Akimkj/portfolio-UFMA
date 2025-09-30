@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define ERROR -1
+#define ERROR -1 
 
 int MaiorElmVetor(int *v, int n) {
     if (v == NULL || n <= 0) {
@@ -18,7 +18,7 @@ int MaiorElmVetor(int *v, int n) {
     return maior;
 }
 
-int SomaElmsVetor(int *v, int n) {
+int SomaElmsVetor(int *v, int n) { 
     if (v == NULL || n <= 0) {
         return ERROR;
     }
