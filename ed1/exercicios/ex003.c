@@ -18,8 +18,8 @@ int TrocaElmsVetor(int *v, int n, int p, int q) {
 }
 
 
-int UniaoVetores(int *a, int *b, int *c, int n, int m) {
-    if (a == NULL || b == NULL || c == NULL || n <= 0 || m <= 0) {
+int UniaoVetores(int *a, int *b, int *c, int n) {
+    if (a == NULL || b == NULL || c == NULL || n <= 0) {
         return FALSE;
     }
     int i = 0, j = 0, k = 0;
@@ -30,7 +30,7 @@ int UniaoVetores(int *a, int *b, int *c, int n, int m) {
         k++;
     }
 
-    while (i < m) {
+    while (i < n) {
         existe = FALSE;
         j = 0;
 
@@ -52,13 +52,54 @@ int UniaoVetores(int *a, int *b, int *c, int n, int m) {
     return k;
 }
 
-int IntersecaoVetores(int *a, int *b, int *c, int n, int m) {
-    if (a == NULL || b == NULL || c == NULL || n <= 0 || m <= 0) {
+int IntersecaoVetores(int *a, int *b, int *c, int n) { 
+    if (a == NULL || b == NULL || c == NULL || n <= 0) {
+        return FALSE;
+    }
+    int achouB, existeC, k = 0;
+
+    for (int i = 0; i < n; i++) {
+        achouB = FALSE;
+        existeC = FALSE; 
+
+        for (int j = 0; j < n; j++) {
+            if (a[i] == b[j]) {
+                achouB = TRUE;
+            }
+        }
+
+        for (int m = 0; m < k; m++) {
+            if (a[i] == c[m]) {
+                existeC = TRUE;
+            }
+        }
+
+        if (achouB && !existeC) {
+            c[k] = a[i];
+            k++;
+        }
+    }
+
+    return k;
+}
+
+int ElemEmPosicaoImparNoVetor(int *a, int *b, int *c, int n) {
+    if (a == NULL || b == NULL || c == NULL || n <= 0) {
         return FALSE;
     }
 
-    for(int i = 0; i < n;)
+    int k = 0;
+
+    for (int i = 1; i < n; i += 2) {
+        c[k] = a[i];
+        k++;
+        c[k] = b[i];
+        k++;
+    }
+
+    return k;
 }
+
 
 int main() {
     int v[] = {9, 3, 2, 8, 9};
@@ -77,19 +118,29 @@ int main() {
     }
 
 
-    int v1[] = {1, 4, 6, 2};
-    int v2[] = {2, 7, 3, 1, 8};
-    int *v3 = (int*) malloc(5 * sizeof(int));
-    int tamV3 = UniaoVetores(v1, v2, v3, 4, 5);
+    int v1[] = {1, 2, 4, 3, 5, 10};
+    int v2[] = {2, 2, 3, 1, 4, 42};
+    int *v3 = (int*) malloc(6 * sizeof(int));
+    int tamV3 = UniaoVetores(v1, v2, v3, 6);
 
     printf("\nUniao vetorC: ");
     for (int i = 0; i < tamV3; i++) {
         printf("%d ", v3[i]);
     }
 
+    int *v4 = (int*) malloc(6 * sizeof(int));
+    int tamV4 = IntersecaoVetores(v1, v2, v4, 6);
+    printf("\nIntersecao vetorC: ");
+    for (int i = 0; i < tamV4; i++) {
+        printf("%d ", v4[i]);
+    }
+    
 
-    printf("Interseccao vetorC: ");
-    for (int i =)
-
+    int *v5 = (int*) malloc(6 * sizeof(int));
+    int tamV5 = ElemEmPosicaoImparNoVetor(v1, v2, v5, 6);
+    printf("\nElmPosicao Impar vetorC: ");
+    for (int i = 0; i < tamV5; i++) {
+        printf("%d ", v5[i]);
+    }
     return 0;
-}
+ }

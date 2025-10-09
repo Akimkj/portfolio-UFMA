@@ -5,7 +5,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/exercicios/output/ex003.exe", 
+            "program": "${workspaceFolder}/exercicios/output/ex007.exe", 
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/exercicios/output",

@@ -34,7 +34,7 @@ int *DevolverVetorDiagonal (int **VA, int N, int M, int vetor[]) {
 
     int i = 0, j = 0;
 
-    while (i < N && j < M) {
+    while (i < N) {
         vetor[i] = VA[i][j];
         i++;
         j++;
@@ -89,6 +89,6 @@ int main() {
 
     
     for (int i = 0; i < linha; i++) { free(mat[i]); }
-    free(mat);
+    free(mat); 
     return 0;
 }
