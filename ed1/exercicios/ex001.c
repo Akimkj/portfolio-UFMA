@@ -35,13 +35,13 @@ int main() {
     int op = strSubString(subm, strM, 6, 20);
 
     if (op) {
-        printf("eh substring!");
+        printf("eh substring!\n");
     }
     else {
-        printf("nao eh sub");
+        printf("nao eh sub\n");
     }
 
+
+    printf("\n\n");
     return 0;
-
-
 }
