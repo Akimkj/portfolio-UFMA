@@ -37,7 +37,7 @@ int GcofoInsert(Gcofo *gcof, Jogo *item) {
 
 int GcofoDestroy(Gcofo *gcof) {
     if (gcof != NULL) {
-        if (gcof->numItens = 0) {
+        if (gcof->numItens == 0) {
             free(gcof->itens);
             free(gcof);
             return TRUE;
@@ -79,7 +79,7 @@ int GcofoQuery(Gcofo *gcof, char *name) {
     int j, status;
     if (gcof != NULL && gcof->numItens > 0) {
         //para cada jogo
-        for (int i = 0; i < gcof->numItens-1; i++) {
+        for (int i = 0; i < gcof->numItens; i++) {
             //para cada letra dentro do nome do jogo
             j = 0;
             status = TRUE;
@@ -98,14 +98,16 @@ int GcofoQuery(Gcofo *gcof, char *name) {
     return FALSE;
 }
 
+/*REFAZER ESTA BENDITA FUNÇÃO*/
 Jogo *GcofoRemove(Gcofo *gcof, char *name) {
     int status, i, j;
     Jogo *data;
     if (gcof != NULL && gcof->numItens > 0) {
+        i = 0;
         status = GcofoQuery(gcof, name);
-        while (i < gcof->numItens && !status) {
-            status = GcofoQuery(gcof, name);
+        while (i < gcof->numItens - 1 && !status) {
             i++;
+            status = GcofoQuery(gcof, name);
         }
         if (status == TRUE) {
             data = gcof->itens[i];

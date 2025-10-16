@@ -1,8 +1,8 @@
 /*
 * Arquivo para definição e especificação do TAD genérico Cofo, tipo de dado para coleção de variados tipos de dados.
-* Modo de compilação: 
-*
-*
+* Modo de compilação e execução: 
+* gcc -g app.c gcofo.c -o app
+* .\app.exe
 */
 #ifndef _GCOFO_H
 #define _GCOFO_H
@@ -10,7 +10,7 @@
 
 /*Estrutura do Cofo Genérico*/
 typedef struct _jogo_ {
-    char *name;
+    char name[100];
     int anoLancamento;
     float notaSteam;
 }Jogo;

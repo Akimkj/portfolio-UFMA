@@ -1,16 +1,17 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/exercicios/output/ex007.exe", 
-            "args": [],
+            "program": "${workspaceFolder}/trabalhos/gCofo/app.exe", 
+            "args": ["-g", "${file}", "-o", "${fileDirname}/${fileBasenameNoExtension}"],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/exercicios/output",
+            "cwd": "${workspaceFolder}/trabalhos/gCofo",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "gdb",
             "setupCommands": [
                 {
