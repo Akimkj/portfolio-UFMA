@@ -6,26 +6,12 @@
 #include <stdlib.h>
 #include "gCofo.h"
 
-/*Estrutura do Cofo Genérico*/
-typedef struct _jogo_ {
-    char name[100];
-    int anoLancamento;
-    float notaSteam;
-}Jogo;
-
-typedef struct _gCofo_ {
-    int maxItens;
-    int numItens;
-    int cur;
-    Jogo *itens;
-}Gcofo;
-
 Gcofo *GcofoCreate(int maxItens) {
     Gcofo *gc;
     if (maxItens > 0) {
         gc = (Gcofo*) malloc(sizeof(Gcofo));
         if (gc != NULL) {
-            gc->itens = (Jogo*) malloc (sizeof(Jogo) * maxItens);
+            gc->itens = (Jogo**) malloc (sizeof(Jogo*) * maxItens);
             if (gc->itens != NULL) {
                 gc->maxItens = maxItens;
                 gc->numItens = 0;
@@ -38,7 +24,7 @@ Gcofo *GcofoCreate(int maxItens) {
     return NULL;
 }
 
-int GcofoInsert(Gcofo *gcof, Jogo item) {
+int GcofoInsert(Gcofo *gcof, Jogo *item) {
     if (gcof != NULL) {
         if (gcof->numItens < gcof->maxItens) {
             gcof->itens[gcof->numItens] = item;
@@ -79,7 +65,7 @@ Jogo *GcofoGetFirst(Gcofo *gcof) {
     return NULL;
 }
 
-void *GcofoGetNext(Gcofo *gcof) {
+Jogo *GcofoGetNext(Gcofo *gcof) {
     if (gcof != NULL) {
         if(gcof->cur < gcof->numItens - 1) {
             gcof->cur++;
@@ -97,14 +83,14 @@ int GcofoQuery(Gcofo *gcof, char *name) {
             //para cada letra dentro do nome do jogo
             j = 0;
             status = TRUE;
-            while (gcof->itens[i].name[j] != '\0' && name[j] != '\0' && status == TRUE) {
-                if (gcof->itens[i].name[j] != name[j]) {
+            while (gcof->itens[i]->name[j] != '\0' && name[j] != '\0' && status == TRUE) {
+                if (gcof->itens[i]->name[j] != name[j]) {
                     status = FALSE;
                 }
                 j++;
             }
 
-            if (status == TRUE && gcof->itens[i].name[j] == '\0' && name[j] == '\0') {
+            if (status == TRUE && gcof->itens[i]->name[j] == '\0' && name[j] == '\0') {
                 return TRUE;
             }
         }
@@ -113,7 +99,24 @@ int GcofoQuery(Gcofo *gcof, char *name) {
 }
 
 Jogo *GcofoRemove(Gcofo *gcof, char *name) {
-    
+    int status, i, j;
+    Jogo *data;
+    if (gcof != NULL && gcof->numItens > 0) {
+        status = GcofoQuery(gcof, name);
+        while (i < gcof->numItens && !status) {
+            status = GcofoQuery(gcof, name);
+            i++;
+        }
+        if (status == TRUE) {
+            data = gcof->itens[i];
+            for (j = i; j < gcof->numItens -1; j++) {
+                gcof->itens[j] = gcof->itens[j+1];
+            }
+            gcof->numItens--;
+            return data;
+        }
+    }
+    return NULL;
 }
 
 

@@ -8,9 +8,19 @@
 #define _GCOFO_H
 #include <stdlib.h>
 
-/*Definição da estrutura do TAD genérico*/
-typedef struct _gCofo_ Gcofo;
-typedef struct _jogo_ Jogo;
+/*Estrutura do Cofo Genérico*/
+typedef struct _jogo_ {
+    char *name;
+    int anoLancamento;
+    float notaSteam;
+}Jogo;
+
+typedef struct _gCofo_ {
+    int maxItens;
+    int numItens;
+    int cur;
+    Jogo **itens;
+}Gcofo;
 
 /*Definições básicas*/
 #define TRUE 1
@@ -35,7 +45,7 @@ Gcofo *GcofoCreate(int maxItens);
 *
 *pos-condicao: retornar TRUE ou FALSE
 ----------------------------*/
-int GcofoInsert(Gcofo *gcof, void* item);
+int GcofoInsert(Gcofo *gcof, Jogo *item);
 
 /*------------------------------
 *Destroi o Cofo 
@@ -91,7 +101,7 @@ int GcofoQuery(Gcofo *gcof, char *name);
 *
 *pos-condição: retornar o primeiro elemento da iteração do TAD ou NULL se não conseguir
 ------------------------*/
-void *GcofoGetFirst(Gcofo *gcof);
+Jogo *GcofoGetFirst(Gcofo *gcof);
 
 /*-----------------------
 *Pega o próximo elemento da iteração do TAD (gcof->cur++)
@@ -100,6 +110,15 @@ void *GcofoGetFirst(Gcofo *gcof);
 *
 *pos-condicao: retornar o próximo elemento da iteração atual do TAD
 --------------------------*/
-void *GcofoGetNext(Gcofo *gcof);
+Jogo *GcofoGetNext(Gcofo *gcof);
+
+/*-----------------------
+*Retorna o tamanho do cofo
+*
+*pre-condicao: gcof != NULL
+*pos-condicao: inteiro com tamanho do cofo
+*
+-------------------------*/
+//int GcofoGetSize(Gcofo *gcof);
 
 #endif
