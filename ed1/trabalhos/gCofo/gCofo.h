@@ -10,6 +10,7 @@
 
 /*Definição da estrutura do TAD genérico*/
 typedef struct _gCofo_ Gcofo;
+typedef struct _jogo_ Jogo;
 
 /*Definições básicas*/
 #define TRUE 1
@@ -30,7 +31,7 @@ Gcofo *GcofoCreate(int maxItens);
 /*-------------------------
 *Insere um novo item no Cofo
 *
-*pre-condicao: gCofo != NULL && item != NULL
+*pre-condicao: gCofo != NULL && o cofo não pode está cheio
 *
 *pos-condicao: retornar TRUE ou FALSE
 ----------------------------*/
@@ -39,7 +40,7 @@ int GcofoInsert(Gcofo *gcof, void* item);
 /*------------------------------
 *Destroi o Cofo 
 *
-*pre-condicao: gcof->numItens = 0
+*pre-condicao: gcof != NULL && gcof->numItens = 0
 *
 *pos-condicao: return TRUE ou FALSE
 ------------------------------*/
@@ -62,16 +63,43 @@ int GcofoEmpty(Gcofo *gcof);
 * pos-condicao = TRUE or FALSE
 *
 ----------------------------*/
-int cmp(void* param1, void* param2);
+//int cmp(void* param1, void* param2);
 
 /*----------------------------
+*Remove um elemento do cofo
 *
+*pre-condicão: gcof != NULL e gcof não pode está vazio.
 *
+*pos-condição: retornar o dado removido, caso encontre, senão retorna NULL
 *
+---------------------------------*/
+Jogo *GcofoRemove(Gcofo *gcof, char *name);
+
+/*-----------------------
+*Consulta um elemento do cofo
 *
+*pre-condição: gcof != NULL e gcof não pode está vazio
 *
+*pos-condicao: retorna ou TRUE caso encontre, ou FALSE caso contrário.
+--------------------------*/
+int GcofoQuery(Gcofo *gcof, char *name);
+
+/*-----------------------
+*Pega o primeiro elemento de iteração do TAD (gcof->cur = 0)
 *
+* pre_condicao: gcof != NULL && gcof não pode está vazio 
 *
-*/
+*pos-condição: retornar o primeiro elemento da iteração do TAD ou NULL se não conseguir
+------------------------*/
+void *GcofoGetFirst(Gcofo *gcof);
+
+/*-----------------------
+*Pega o próximo elemento da iteração do TAD (gcof->cur++)
+*
+*pre-condicao: gcof != NULL && precisa ter um próximo elemento para iterar.
+*
+*pos-condicao: retornar o próximo elemento da iteração atual do TAD
+--------------------------*/
+void *GcofoGetNext(Gcofo *gcof);
 
 #endif
