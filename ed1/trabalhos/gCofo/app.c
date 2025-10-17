@@ -33,23 +33,23 @@ int main() {
         if (opcao == 1) {
             int tamMax;
             if (jogos != NULL) {
-                printf("\n\tUma colecao ja esta criada\n");
+                printf("\n>>>>>>>>>>Uma colecao ja esta criada<<<<<<<<<<\n");
             }
             else {
                 printf("Digite o tamanho maximo da colecao: ");
                 scanf("%d", &tamMax);
                 jogos = GcofoCreate(tamMax);
                 if (jogos != NULL) {
-                    printf("\n\tCOLECAO CRIADA!\n");
+                    printf("\n>>>>>>>>>>COLECAO CRIADA!<<<<<<<<<<\n");
                 }
                 else {
-                    printf("\n\tFalha ao criar colecao!\n");
+                    printf("\n>>>>>>>>>>Falha ao criar colecao!<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 2) {
             if (jogos == NULL) {
-                printf("\n\tPrimeiramente, crie uma colecao\n");
+                printf("\n>>>>>>>>>>Primeiramente, crie uma colecao<<<<<<<<<<\n");
             }
             else {
                 jogo = (Jogo*) malloc (sizeof(Jogo));
@@ -65,20 +65,21 @@ int main() {
                     
                     result = GcofoInsert(jogos, jogo);
                     if (result) {
-                        printf("\n\tJogo Inserido com Sucesso!\n");
+                        printf("\n>>>>>>>>>>Jogo Inserido com Sucesso!<<<<<<<<<<\n");
                     }
                     else {
-                        printf("\n\tColecao ja esta cheia!!!\n");
+                        printf("\n>>>>>>>>>>Colecao ja esta cheia!!!<<<<<<<<<<\n");
+                        free(jogo);
                     }
                 }
                 else {
-                        printf("\n\tFalha ao inserir jogo na colecao\n");
+                        printf("\n>>>>>>>>>>Falha ao inserir jogo na colecao<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 3) { 
             if (jogos == NULL) {
-                printf("\n\tPrimeiramente, crie uma colecao\n");
+                printf("\n>>>>>>>>>>Primeiramente, crie uma colecao<<<<<<<<<<\n");
             }
             else {
                 char jogoRemover[100];
@@ -90,17 +91,18 @@ int main() {
                 jogoRemovido = GcofoRemove(jogos, jogoRemover);
 
                 if (jogoRemovido != NULL) {
-                    printf("\n\tJogo removido com sucesso: ");
-                    printf("\n\tNome: %s | Ano lancamento: %d | Nota: %.1f \n", jogoRemovido->name, jogoRemovido->anoLancamento, jogoRemovido->notaSteam);
+                    printf("\n>>>>>>>>>>Jogo removido com sucesso: <<<<<<<<<<");
+                    printf("\n>>>>>>>>>>Nome: %s | Ano lancamento: %d | Nota: %.1f <<<<<<<<<<\n", jogoRemovido->name, jogoRemovido->anoLancamento, jogoRemovido->notaSteam);
+                    free(jogoRemovido);
                 }
                 else {
-                    printf("\n\tNão foi possivel localizar este jogo na colecao\n");
+                    printf("\n>>>>>>>>>>Não foi possivel localizar este jogo na colecao<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 4) {
             if (jogos == NULL) {
-                printf("\n\tCrie uma colecao primeiro\n");
+                printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
             }
             else {
                 char nomeProcurar[100];
@@ -111,27 +113,28 @@ int main() {
                 result = GcofoQuery(jogos, nomeProcurar);
 
                 if (result == TRUE) {
-                    printf("\n\tElemento encontrado!\n");
+                    printf("\n>>>>>>>>>>Elemento encontrado!<<<<<<<<<<\n");
                 }
                 else {
-                    printf("\n\tElemento nao esta presente na colecao!\n");
+                    printf("\n>>>>>>>>>>Elemento nao esta presente na colecao!<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 5) {
             if (jogos == NULL) {
-                printf("\n\tCrie uma colecao primeiro\n");
+                printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
             }
             else { //Tentar melhorar indentação do output
-                printf("NOME \t ANO-LANCAMENTO   NOTA\n");
+                printf("│ %-28s │ %-13s │ %-8s │\n", "NOME", "ANO-LANCAMENTO", "NOTA");
                 aux = GcofoGetFirst(jogos);
                 if (aux != NULL) {
-                    printf("\n%s \t %d \t %.1f\n", aux->name, aux->anoLancamento, aux->notaSteam);
+                    printf("│ %-28s │ %-13d │ %-8.1f │\n", aux->name, aux->anoLancamento, aux->notaSteam);
 
                     for (int i = 1; i < jogos->numItens; i++) {
                         aux = GcofoGetNext(jogos);
-                        printf("\n%s \t %d \t %.1f\n", aux->name, aux->anoLancamento, aux->notaSteam);
+                        printf("│ %-28s │ %-13d │ %-8.1f │\n", aux->name, aux->anoLancamento, aux->notaSteam);
                     }
+                    printf("-------------------------------------------------------------------------------\n");
                 }
                 else {
                 printf("A colecao esta vazia\n");
@@ -140,44 +143,44 @@ int main() {
         }
         else if (opcao == 6) {
             if (jogos == NULL) {
-                printf("\n\tCrie uma colecao primeiro\n");
+                printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
             }
             else {
                 result = GcofoEmpty(jogos);
 
                 if (result == TRUE) {
-                    printf("\n\tA colecao foi esvaziada\n");
+                    printf("\n>>>>>>>>>>A colecao foi esvaziada<<<<<<<<<<\n");
                 }
                 else {
-                    printf("\n\tFalha ao esvaziar a colecao!\n");
+                    printf("\n>>>>>>>>>>Falha ao esvaziar a colecao!<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 7) {
             if (jogos == NULL) {
-                printf("\n\tCrie uma colecao primeiro\n");
+                printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
             }
             else {
                 result = GcofoDestroy(jogos);
 
                 if (result == TRUE) {
-                    printf("\n\tColecao destruida com sucesso\n");
+                    printf("\n>>>>>>>>>>Colecao destruida com sucesso<<<<<<<<<<\n");
                     jogos = NULL;
                 }
                 else {
-                    printf("\n\tA colecao precisa estar vazia\n");
+                    printf("\n>>>>>>>>>>A colecao precisa estar vazia<<<<<<<<<<\n");
                 }
             }
         }
         else {
             flagParada = FALSE;
-            printf("Encerrando programa...");
+            printf("Encerrando programa...\n");
         }
     }
 
     if (jogos != NULL) {
-        free(jogos->itens);
-        free(jogos);
+        GcofoEmpty(jogos);
+        GcofoDestroy(jogos);
     }
 
     return 0;
