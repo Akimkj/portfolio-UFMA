@@ -125,14 +125,14 @@ int main() {
                 printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
             }
             else { //Tentar melhorar indentação do output
-                printf("│ %-28s │ %-13s │ %-8s │\n", "NOME", "ANO-LANCAMENTO", "NOTA");
+                printf("| %-28s | %-13s | %-8s |\n", "NOME", "ANO-LANCAMENTO", "NOTA");
                 aux = GcofoGetFirst(jogos);
                 if (aux != NULL) {
-                    printf("│ %-28s │ %-13d │ %-8.1f │\n", aux->name, aux->anoLancamento, aux->notaSteam);
+                    printf("| %-28s | %-13d | %-8.1f |\n", aux->name, aux->anoLancamento, aux->notaSteam);
 
                     for (int i = 1; i < jogos->numItens; i++) {
                         aux = GcofoGetNext(jogos);
-                        printf("│ %-28s │ %-13d │ %-8.1f │\n", aux->name, aux->anoLancamento, aux->notaSteam);
+                        printf("| %-28s | %-13d | %-8.1f |\n", aux->name, aux->anoLancamento, aux->notaSteam);
                     }
                     printf("-------------------------------------------------------------------------------\n");
                 }
