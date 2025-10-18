@@ -1,7 +1,7 @@
 /*
 * Arquivo para definição e especificação do TAD genérico Cofo, tipo de dado para coleção de variados tipos de dados.
 * Modo de compilação e execução: 
-* gcc -g app.c gcofo.c -o app
+* gcc -g app.c gCofo.c -o app
 * .\app.exe
 */
 #ifndef _GCOFO_H
@@ -66,14 +66,14 @@ int GcofoDestroy(Gcofo *gcof);
 int GcofoEmpty(Gcofo *gcof);
 
 /*-----------------------
-* Comparação de igualdade do param 1 pelo param 2
+* Comparação de igualdade
 * 
 * pre-condicao = param1 != NULL && param != NULL
 *
 * pos-condicao = TRUE or FALSE
 *
 ----------------------------*/
-//int cmp(void* param1, void* param2);
+int cmp(char *str1, char *str2);
 
 /*----------------------------
 *Remove um elemento do cofo

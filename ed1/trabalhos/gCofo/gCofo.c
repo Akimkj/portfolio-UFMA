@@ -6,6 +6,26 @@
 #include <stdlib.h>
 #include "gCofo.h"
 
+// Função auxiliar para comparar strings
+int cmp(char *str1, char *str2) {
+    int i = 0;
+    
+    // Compara caractere por caractere
+    while (str1[i] != '\0' && str2[i] != '\0') {
+        if (str1[i] != str2[i]) {
+            return FALSE;
+        }
+        i++;
+    }
+    
+    // Se ambos terminaram, são iguais
+    if (str1[i] == str2[i]) {
+        return TRUE;
+    }
+    
+    return FALSE; 
+}
+
 Gcofo *GcofoCreate(int maxItens) {
     Gcofo *gc;
     if (maxItens > 0) {
@@ -15,6 +35,7 @@ Gcofo *GcofoCreate(int maxItens) {
             if (gc->itens != NULL) {
                 gc->maxItens = maxItens;
                 gc->numItens = 0;
+                gc->cur = -1;
                 return gc;
             }
             free(gc->itens);
@@ -49,6 +70,12 @@ int GcofoDestroy(Gcofo *gcof) {
 
 int GcofoEmpty(Gcofo *gcof) {
     if (gcof != NULL) {
+        // Libera todos os jogos armazenados
+        for (int i = 0; i < gcof->numItens; i++) {
+            if (gcof->itens[i] != NULL) {
+                free(gcof->itens[i]);
+            }
+        }
         gcof->numItens = 0;
         return TRUE;
     }
@@ -98,25 +125,29 @@ int GcofoQuery(Gcofo *gcof, char *name) {
     return FALSE;
 }
 
-/*REFAZER ESTA BENDITA FUNÇÃO*/
+
 Jogo *GcofoRemove(Gcofo *gcof, char *name) {
-    int status, i, j;
-    Jogo *data;
-    if (gcof != NULL && gcof->numItens > 0) {
-        i = 0;
-        status = GcofoQuery(gcof, name);
-        while (i < gcof->numItens - 1 && !status) {
-            i++;
-            status = GcofoQuery(gcof, name);
-        }
-        if (status == TRUE) {
-            data = gcof->itens[i];
-            for (j = i; j < gcof->numItens -1; j++) {
-                gcof->itens[j] = gcof->itens[j+1];
+    Jogo *removido;
+
+    if (gcof != NULL && gcof->numItens > 0 && name != NULL) {
+        for (int i = 0; i < gcof->numItens; i++) {
+            if (gcof->itens[i] != NULL && 
+                gcof->itens[i]->name != NULL && 
+                cmp(gcof->itens[i]->name, name)) {
+            
+                removido = gcof->itens[i];
+            
+                // Remove o elemento
+                for (int j = i; j < gcof->numItens - 1; j++) {
+                    gcof->itens[j] = gcof->itens[j + 1];
+                }
+            
+                gcof->itens[gcof->numItens - 1] = NULL;
+                gcof->numItens--;
+            
+                return removido;
             }
-            gcof->numItens--;
-            return data;
-        }
+        }   
     }
     return NULL;
 }
