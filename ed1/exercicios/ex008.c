@@ -23,5 +23,6 @@ int main() {
     Stack *s;
     s = stkCreate(20);
     prime_fact(s, 520);
+    stkDestroy(s);
     return 0;
 }
