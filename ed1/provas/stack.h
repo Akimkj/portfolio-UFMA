@@ -13,4 +13,7 @@ int push(Stack *stk, void *data);
 
 void *pop(Stack *stk);
 
+int RemoveMaioresQueKey(Stack *s, void *key, int (*cmp) 
+(void *, void *));
+
 #endif

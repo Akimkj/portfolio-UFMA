@@ -18,14 +18,12 @@ void mostrarNovaFila(Queue *q, int n) {
 
 int RemoveElementosOrdemParFilaCircular(Queue *q, int n) {
     int pos;
+    void *elem;
     if (q != NULL && n > 0) {
         for(pos = 0; pos < n; pos++) {
+            elem = qcDeQueue(q);
             if (pos % 2 == 0) {
-                qcDeQueue(q);
-                qcEnQueue(q, NULL);
-            }
-            else {
-                qcEnQueue(q, qcDeQueue(q));
+                qcEnQueue(q, elem);
             }
         }
         return TRUE;

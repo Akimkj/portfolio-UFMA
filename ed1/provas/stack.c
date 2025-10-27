@@ -56,4 +56,28 @@ void *pop(Stack *stk) {
 }
 
 
+/*Faça um algoritmo que recebe uma pilha armazenada em um 
+vetor, um valor (chave), e uma função de comparação, e remove 
+respeitando a disciplina de acesso da pilha todos os elementos até 
+encontrar um com chave menor que o valor da chave recebida. 
+Não pode usar pops e push, e deve obedecer a disciplina de 
+acesso da pilha. É uma função interna do TAD Pilha. 
+int RemoveMaioresQueKey (Stack *s, void *key, int (*cmp) 
+(void *, void *)) 
+OBS: cmp (a,b) retorna TRUE se a < b e False caso contrário */
+int RemoveMaioresQueKey(Stack *s, void *key, int (*cmp) 
+(void *, void *)) {
+    int count = 0;
+    if (s != NULL) {
+        if (s->top >= 0) {
+            while (s->top >= 0 && !cmp(s->itens[s->top], key)) {
+                s->top--;
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+
 #endif
