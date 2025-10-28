@@ -3,21 +3,48 @@
 #include "stack.h"
 
 /*
-Faça um algoritmo que recebe dois vetores de caracteres s1 e 
-s2 com uma frase em que as palavras estão separadas por espaços 
-em branco e, usando uma única pilha, verificar se as palavras que 
-existem em s1 estão em s2 na mesma sequencia mas em ordem 
-inversa. Não pode usar memória auxiliar somente usar as funções 
-do TAD (stkCreate, stkPop, stkPush, stkDestroy). 
-int VerificaString(Stack *s1, char *s2, int length); 
-Exemplo de strings que tornam verdadeira a afirmativa: 
-S1 = “O Flamengo é o melhor time do Brasil” 
-S2 = “O ognemalF é o rohlem emit od lisarB”
+Escreva um algoritmo que recebe uma matriz de numeros inteiros, com n linhas e m colunas, armazenadas no vetor v, e usa o TAD Stack para inverter os primeiros m elementos da linha l da matriz.
+int InverteOrdemElementosLinhaK(int *v, int n, int m, int l);
 */
 
-int VerificaString(Stack *s1, char *s2, int length) {
-    if (s1 != NULL) {
-        
+int InverteOrdemElementosLinhaK(int *v, int m, int l) {
+    Stack *stktemp;
+    void *aux;
+    if (v != NULL) {
+        stktemp = stkCreate(m);
+        if (stktemp != NULL) {
+            for (int i = 0; i < m; i++) {
+                aux = (void*) v[l * m + i];
+                push(stktemp, aux);
+            }
+
+            
+            for (int j = 0; j < m; j++) {
+                v[l * m + j] = (int) pop(stktemp);
+            }
+
+            stkDestroy(stktemp);
+            return TRUE;
+        }
     }
     return FALSE;
+}
+
+int main() {
+    int vet[] = {
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9
+    };
+
+    InverteOrdemElementosLinhaK(vet, 3, 2);
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", vet[i * 3 + j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
 }
