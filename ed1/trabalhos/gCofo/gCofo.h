@@ -2,7 +2,7 @@
 * Arquivo para definição e especificação do TAD genérico Cofo, tipo de dado para coleção de variados tipos de dados.
 * Modo de compilação e execução: 
 * gcc -g app.c gCofo.c -o app
-* .\app.exe
+* ./app.exe
 */
 #ifndef _GCOFO_H
 #define _GCOFO_H
@@ -15,12 +15,7 @@ typedef struct _jogo_ {
     float notaSteam;
 }Jogo;
 
-typedef struct _gCofo_ {
-    int maxItens;
-    int numItens;
-    int cur;
-    Jogo **itens;
-}Gcofo;
+typedef struct _gCofo_ Gcofo;
 
 /*Definições básicas*/
 #define TRUE 1
@@ -113,12 +108,12 @@ Jogo *GcofoGetFirst(Gcofo *gcof);
 Jogo *GcofoGetNext(Gcofo *gcof);
 
 /*-----------------------
-*Retorna o tamanho do cofo
+*Retorna a quantidade de itens do cofo
 *
 *pre-condicao: gcof != NULL
-*pos-condicao: inteiro com tamanho do cofo
+*pos-condicao: inteiro com quantidade de itens do cofo
 *
 -------------------------*/
-//int GcofoGetSize(Gcofo *gcof);
+int GcofoGetSize(Gcofo *gcof);
 
 #endif

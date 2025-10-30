@@ -6,6 +6,13 @@
 #include <stdlib.h>
 #include "gCofo.h"
 
+typedef struct _gCofo_ {
+    int maxItens;
+    int numItens;
+    int cur;
+    Jogo **itens;
+}Gcofo;
+
 // Função auxiliar para comparar strings
 int cmp(char *str1, char *str2) {
     int i = 0;
@@ -152,6 +159,11 @@ Jogo *GcofoRemove(Gcofo *gcof, char *name) {
     return NULL;
 }
 
-
+int GcofoGetSize(Gcofo *gcof) {
+    if (gcof != NULL) {
+        return gcof->numItens;
+    }
+    return -1;
+}
 
 #endif

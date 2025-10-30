@@ -130,7 +130,7 @@ int main() {
                 if (aux != NULL) {
                     printf("| %-28s | %-13d | %-8.1f |\n", aux->name, aux->anoLancamento, aux->notaSteam);
 
-                    for (int i = 1; i < jogos->numItens; i++) {
+                    for (int i = 1; i < GcofoGetSize(jogos); i++) {
                         aux = GcofoGetNext(jogos);
                         printf("| %-28s | %-13d | %-8.1f |\n", aux->name, aux->anoLancamento, aux->notaSteam);
                     }
