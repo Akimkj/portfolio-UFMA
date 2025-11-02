@@ -32,12 +32,12 @@ int MultiplicaMatrizes(int *v1, int *v2, int *v3, int n) {
 
 
 int main() {
-    int vet1[] = {5, 7, 8, 
-                2, 11, 4, 
-                3, 6, 1};
-    int vet2[] = {8, 2, 4,
-                6, 3, 9,
-                11, 1, 7};
+    int vet1[] = {1, 2, 3, 
+                3, 1, 2, 
+                3, 2, 1};
+    int vet2[] = {1, 2, 2,
+                1, 3, 1,
+                3, 1, 2};
     int *vet3;
     vet3 = (int *) malloc (sizeof(int) * 3 * 3);
 

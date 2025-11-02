@@ -6,7 +6,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/provas/output/ex003.exe", 
+            "program": "${workspaceFolder}/provas/output/ex006.exe", 
             "args": ["-g", "${file}", "-o", "${fileDirname}/${fileBasenameNoExtension}"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/provas/output",
