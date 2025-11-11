@@ -18,6 +18,10 @@ void *sllRemoveFirst(SLlist *l);
 
 void *sllQueryLast(SLlist *l);
 
+int sllSize(SLlist *l);
+
 int sllInsertAsLast(SLlist *l, void *data);
+
+int sllInsertAfterFirst(SLlist *l, void *data);
 
 #endif

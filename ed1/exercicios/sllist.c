@@ -76,6 +76,23 @@ void *sllQueryLast(SLlist *l) {
     return NULL;
 }
 
+int sllSize(SLlist *l) {
+    SLnode *last;
+    int count;
+    if (l != NULL) {
+        if (l->first != NULL) {
+            count = 0;
+            last = l->first;
+            while (last->next != NULL) {
+                count++;
+                last = last->next;
+            }
+            return count;
+        }
+    }
+    return 0;
+}
+
 int sllInsertAsLast(SLlist *l, void *data) {
     SLnode *newnode;
     SLnode *last;
@@ -95,6 +112,24 @@ int sllInsertAsLast(SLlist *l, void *data) {
                 l->first = newnode;
             }
             return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+int sllInsertAfterFirst(SLlist *l, void *data) {
+    SLnode *newnode;
+    SLnode *nodeFirst;
+    if (l != NULL) {
+        if (l->first != NULL) {
+            newnode = (SLnode*) malloc(sizeof(SLnode));
+            if (newnode != NULL) {
+                nodeFirst = l->first;
+                newnode->data = data;
+                newnode->next = nodeFirst->next;
+                nodeFirst->next = newnode;
+                return TRUE;
+            }
         }
     }
     return FALSE;
