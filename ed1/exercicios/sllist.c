@@ -81,7 +81,7 @@ int sllSize(SLlist *l) {
     int count;
     if (l != NULL) {
         if (l->first != NULL) {
-            count = 0;
+            count = 1;
             last = l->first;
             while (last->next != NULL) {
                 count++;
@@ -163,11 +163,11 @@ int sllInsertAfterSpec(SLlist *l, void *key, int (*cmp) (void*, void*), void *da
         if (l->first != NULL) {
             spec = l->first;
             stat = cmp(key, spec->data);
-            while(stat != FALSE && spec->next != NULL) {
+            while(stat != TRUE && spec->next != NULL) {
                 spec = spec->next;
                 stat = cmp(key, spec->data);
             }
-            if(spec == TRUE) {
+            if(stat == TRUE) {
                 newnode = (SLnode*) malloc(sizeof(SLnode));
                 if (newnode != NULL) {
                     newnode->data = data;
