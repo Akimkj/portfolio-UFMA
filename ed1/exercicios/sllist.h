@@ -18,10 +18,24 @@ void *sllRemoveFirst(SLlist *l);
 
 void *sllQueryLast(SLlist *l);
 
-int sllSize(SLlist *l);
+int sllSize(SLlist *l); // 2 - da lista de exercicio 2
 
 int sllInsertAsLast(SLlist *l, void *data);
 
 int sllInsertAfterFirst(SLlist *l, void *data);
+
+void *sllQuery(SLlist *l, void *key, int (*cmp) (void*, void*));
+
+int sllInsertAfterSpec(SLlist *l, void *key, int (*cmp) (void*, void*), void *data);
+
+void *sllRemoveSpec(SLlist *l, void *key, int (*cmp) (void*, void*));
+
+int sllInsertBeforeSpec(SLlist *l, void *key, int (*cmp) (void*, void*), void *data); // 1 - da lista de execicio 2
+
+void *sllRemoveAfterSpec(SLlist *l, void *key, int (*cmp) (void*, void*)); // 3 - da lista de exercicio 2
+
+void *sllRemoveBeforeSpec(SLlist *l, void *key, int (*cmp) (void*, void*)); // 4 - da lista de exercício 2
+
+
 
 #endif
