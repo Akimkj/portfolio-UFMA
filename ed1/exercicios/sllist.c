@@ -247,7 +247,10 @@ int sllInsertBeforeSpec(SLlist *l, void *key, int (*cmp) (void*, void*), void *d
     return FALSE;
 }
 
+/*usaremos apenas o spec para percorrer a lista, caso achemos spec, aí sim atribuimos uma variavel chamada next
 
+podemos fazer isso, ao invés de fazer com que o next também percorra a lista, de forma confusa
+*/
 void *sllRemoveAfterSpec(SLlist *l, void *key, int (*cmp) (void*, void*)) {
     void *data;
     int stat;
@@ -256,14 +259,13 @@ void *sllRemoveAfterSpec(SLlist *l, void *key, int (*cmp) (void*, void*)) {
     if (l != NULL) {
         if (l->first != NULL) {
             spec = l->first;
-            next = spec->next;
             stat = cmp(key, spec->data);
             while (stat != TRUE && spec->next != NULL) {
-                spec = next;
-                next = next->next;
+                spec = spec->next;
                 stat = cmp(key, spec->data);
             }
             if (stat == TRUE) {
+                next = spec->next;
                 if (next != NULL) { //só posso remover o proximo se existir o proximo
                     data = next->data;
                     spec->next = next->next;
