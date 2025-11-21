@@ -4,22 +4,24 @@
 
 void menuOpcoes() {
     printf("\n");
-    printf("\t1. Criar uma nova colecao\n");
+    printf("\t1. Criar uma nova lista\n");
     printf("\t2. adicionar elemento\n");
     printf("\t3. remover elemento\n");
     printf("\t4. Consultar elemento\n");
     printf("\t5. Listar elementos\n");
-    printf("\t6. Esvaziar colecao\n");
-    printf("\t7. Destruir colecao\n");
+    printf("\t6. Esvaziar lista\n");
+    printf("\t7. Destruir lista\n");
     printf("\t8. Encerrar programa\n");
     printf("\nEscolha uma opcao: ");
 }
 
 
+
+
 int main() {
     int flagParada = TRUE;
     int opcao, result;
-    Gcofo *jogos = NULL;
+    SLList *jogos = NULL;
     Jogo *jogo, *aux;
 
     while (flagParada == TRUE) {
@@ -31,25 +33,22 @@ int main() {
             scanf("%d", &opcao);
         }
         if (opcao == 1) {
-            int tamMax;
             if (jogos != NULL) {
-                printf("\n>>>>>>>>>>Uma colecao ja esta criada<<<<<<<<<<\n");
+                printf("\n>>>>>>>>>>Uma lista ja esta criada<<<<<<<<<<\n");
             }
             else {
-                printf("Digite o tamanho maximo da colecao: ");
-                scanf("%d", &tamMax);
-                jogos = GcofoCreate(tamMax);
+                jogos = sllCreate();
                 if (jogos != NULL) {
-                    printf("\n>>>>>>>>>>COLECAO CRIADA!<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>LISTA CRIADA!<<<<<<<<<<\n");
                 }
                 else {
-                    printf("\n>>>>>>>>>>Falha ao criar colecao!<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>Falha ao criar lista!<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 2) {
             if (jogos == NULL) {
-                printf("\n>>>>>>>>>>Primeiramente, crie uma colecao<<<<<<<<<<\n");
+                printf("\n>>>>>>>>>>Primeiramente, crie uma lista<<<<<<<<<<\n");
             }
             else {
                 jogo = (Jogo*) malloc (sizeof(Jogo));
@@ -63,7 +62,7 @@ int main() {
                     scanf("%f", &(jogo->notaSteam));
 
                     
-                    result = GcofoInsert(jogos, jogo);
+                    result = sllInsertAsFirst(jogos, jogo);
                     if (result) {
                         printf("\n>>>>>>>>>>Jogo Inserido com Sucesso!<<<<<<<<<<\n");
                     }
@@ -79,7 +78,7 @@ int main() {
         }
         else if (opcao == 3) { 
             if (jogos == NULL) {
-                printf("\n>>>>>>>>>>Primeiramente, crie uma colecao<<<<<<<<<<\n");
+                printf("\n>>>>>>>>>>Primeiramente, crie uma lista<<<<<<<<<<\n");
             }
             else {
                 char jogoRemover[100];
@@ -88,7 +87,7 @@ int main() {
                 printf("Digite o nome do jogo que deseja remover: ");
                 scanf("%100[^\n]", jogoRemover);
 
-                jogoRemovido = GcofoRemove(jogos, jogoRemover);
+                jogoRemovido = sllRemoveSpec(jogos, (void*) &jogoRemover, cmp);
 
                 if (jogoRemovido != NULL) {
                     printf("\n>>>>>>>>>>Jogo removido com sucesso: <<<<<<<<<<");
@@ -96,7 +95,7 @@ int main() {
                     free(jogoRemovido);
                 }
                 else {
-                    printf("\n>>>>>>>>>>Não foi possivel localizar este jogo na colecao<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>Não foi possivel localizar este jogo na lista<<<<<<<<<<\n");
                 }
             }
         }

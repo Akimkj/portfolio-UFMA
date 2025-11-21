@@ -1,8 +1,18 @@
 #ifndef _SLLIST_H
 #define _SLLIST_H
-
+/*
+* gcc -g app.c gCofo.c -o app
+* ./app.exe
+*/
 typedef struct _slnode_ SLNode;
 typedef struct _sllist_ SLList;
+
+typedef struct _jogo_ {
+    char name[100];
+    int anoLancamento;
+    float notaSteam;
+}Jogo;
+
 
 #define TRUE 1
 #define FALSE 0
