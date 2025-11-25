@@ -312,4 +312,38 @@ void *sllRemoveBeforeSpec(SLlist *l, void *key, int (*cmp) (void*, void*)) {
     }
     return NULL;
 }
+
+int csllInsertBeforeSpec(SLlist *l, void *key, int  (*cmp) (void*, void*), void *data) {
+    SLnode *prev, *spec, *newnode;
+    int stat;
+
+    if (l != NULL) {
+        if (l->first != NULL) {
+            prev = l->first;
+            spec = prev->next;
+            stat = cmp(key, spec->data);
+            while (stat != TRUE && spec != l->first ) {
+                prev = spec;
+                spec = spec->next;
+                stat = cmp(key, spec->data);
+            }
+            if (stat == TRUE) {
+                newnode = (SLnode*) malloc (sizeof(SLnode));
+                if (newnode != NULL) {
+                    newnode->data = data;
+                    newnode->next = spec;
+                    prev->next = newnode;
+                    if (spec == l->first) {
+                        l->first = newnode;
+                    }
+                    return TRUE;
+                }
+            } 
+        }
+    }
+    return FALSE;
+}
+
+
+
 #endif

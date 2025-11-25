@@ -189,4 +189,41 @@ int dllInsertBeforeSpec(DLList *l, void *key, int (*cmp)(void*,void*), void *dat
     return FALSE;
 }
 
+int cdllInsertBeforeSpec(DLList *l, void *key, int (*cmp)(void*,void*), void *data) {
+    DLNode *spec, *newnode, *prev;
+    int stat;
+
+    if (l != NULL) {
+        if (l->first != NULL) {
+            spec = l->first;
+            stat = cmp(key, spec->data);
+
+            while (spec->next != l->first && stat != TRUE) {
+                spec = spec->next;
+                stat = cmp(key, spec->data);
+            }
+            if (stat == TRUE) {
+                newnode = (DLNode*) malloc(sizeof(DLNode));
+                if (newnode != NULL) {
+                    prev = spec->prev;
+
+                    newnode->data = data;
+                    newnode->next = spec;
+                    spec->prev = newnode;
+                    newnode->prev = prev;
+                    prev->next = newnode;
+
+                    if (spec == l->first) {
+                        l->first = newnode;
+                    }
+
+                    return TRUE;
+
+                }
+            }
+        }
+    }
+    return FALSE;
+}
+
 #endif
