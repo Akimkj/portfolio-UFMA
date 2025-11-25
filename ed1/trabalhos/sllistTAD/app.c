@@ -1,21 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "sllist.h"
 
 void menuOpcoes() {
     printf("\n");
     printf("\t1. Criar uma nova lista\n");
-    printf("\t2. adicionar elemento\n");
-    printf("\t3. remover elemento\n");
-    printf("\t4. Consultar elemento\n");
-    printf("\t5. Listar elementos\n");
+    printf("\t2. adicionar Jogos\n");
+    printf("\t3. remover Jogos\n");
+    printf("\t4. Consultar Jogos\n");
+    printf("\t5. Listar Jogos\n");
     printf("\t6. Esvaziar lista\n");
     printf("\t7. Destruir lista\n");
     printf("\t8. Encerrar programa\n");
     printf("\nEscolha uma opcao: ");
 }
 
+int cmp(void *key, void *data) {
+    
+    char *nomeProcurado = (char *)key;
+    Jogo *jogoNaLista = (Jogo *)data;
 
+    if (strcmp(nomeProcurado, jogoNaLista->name) == 0) {
+        return TRUE; 
+    } else {
+        return FALSE;
+    }
+}
 
 
 int main() {
@@ -101,7 +112,7 @@ int main() {
         }
         else if (opcao == 4) {
             if (jogos == NULL) {
-                printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
+                printf("\n>>>>>>>>>>Crie uma lista primeiro<<<<<<<<<<\n");
             }
             else {
                 char nomeProcurar[100];
@@ -109,28 +120,30 @@ int main() {
                 printf("Digite o nome do jogo que deseja achar: ");
                 scanf("%100[^\n]", nomeProcurar);
 
-                result = GcofoQuery(jogos, nomeProcurar);
+                result = sllQuery(jogos, nomeProcurar, cmp);
 
-                if (result == TRUE) {
+                if (result != FALSE) {
                     printf("\n>>>>>>>>>>Elemento encontrado!<<<<<<<<<<\n");
                 }
                 else {
-                    printf("\n>>>>>>>>>>Elemento nao esta presente na colecao!<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>Elemento nao esta presente na lista!<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 5) {
             if (jogos == NULL) {
-                printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
+                printf("\n>>>>>>>>>>Crie uma lista primeiro<<<<<<<<<<\n");
             }
             else { //Tentar melhorar indentação do output
                 printf("| %-28s | %-13s | %-8s |\n", "NOME", "ANO-LANCAMENTO", "NOTA");
-                aux = GcofoGetFirst(jogos);
+
+                aux = (Jogo*) sllGetFirst(jogos);
+
                 if (aux != NULL) {
                     printf("| %-28s | %-13d | %-8.1f |\n", aux->name, aux->anoLancamento, aux->notaSteam);
 
-                    for (int i = 1; i < GcofoGetSize(jogos); i++) {
-                        aux = GcofoGetNext(jogos);
+                    for (int i = 1; i < sllSize(jogos); i++) {
+                        aux = (Jogo*) sllGetNext(jogos);
                         printf("| %-28s | %-13d | %-8.1f |\n", aux->name, aux->anoLancamento, aux->notaSteam);
                     }
                     printf("-------------------------------------------------------------------------------\n");
@@ -145,29 +158,28 @@ int main() {
                 printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
             }
             else {
-                result = GcofoEmpty(jogos);
+                result = sllEmpty(jogos);
 
                 if (result == TRUE) {
-                    printf("\n>>>>>>>>>>A colecao foi esvaziada<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>A lista esvaziada<<<<<<<<<<\n");
                 }
                 else {
-                    printf("\n>>>>>>>>>>Falha ao esvaziar a colecao!<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>Falha ao esvaziar lista!<<<<<<<<<<\n");
                 }
             }
         }
         else if (opcao == 7) {
             if (jogos == NULL) {
-                printf("\n>>>>>>>>>>Crie uma colecao primeiro<<<<<<<<<<\n");
+                printf("\n>>>>>>>>>>Crie uma lista primeiro<<<<<<<<<<\n");
             }
             else {
-                result = GcofoDestroy(jogos);
+                result = sllDestroy(jogos);
 
                 if (result == TRUE) {
-                    printf("\n>>>>>>>>>>Colecao destruida com sucesso<<<<<<<<<<\n");
-                    jogos = NULL;
+                    printf("\n>>>>>>>>>>Lista destruida com sucesso<<<<<<<<<<\n");
                 }
                 else {
-                    printf("\n>>>>>>>>>>A colecao precisa estar vazia<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>A Lista precisa estar vazia<<<<<<<<<<\n");
                 }
             }
         }
@@ -178,8 +190,7 @@ int main() {
     }
 
     if (jogos != NULL) {
-        GcofoEmpty(jogos);
-        GcofoDestroy(jogos);
+        sllDestroy(jogos);
     }
 
     return 0;

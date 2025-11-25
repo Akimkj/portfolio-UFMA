@@ -10,7 +10,7 @@ typedef struct _slnode_ {
 }SLNode;
 
 typedef struct _sllist_ {
-    SLNode *first;
+    SLNode *first, *current;
 }SLList;
 
 SLList *sllCreate() {
@@ -33,13 +33,15 @@ int sllDestroy(SLList *l) {
     return FALSE;
 }
 
-int sllIsEmpty(SLList *l) {
+int sllEmpty(SLList *l) {
     if (l != NULL) {
         if (l->first != NULL) {
-            return FALSE;
+            free(l->first);
+            l->first = NULL;
+            return TRUE;
         }
     }
-    return TRUE;
+    return FALSE;
 }
 
 int sllSize(SLList *l) {
@@ -259,6 +261,46 @@ void *sllRemoveBeforeSpec(SLList *l, void *key, int (*cmp) (void*, void*)) {
                     return data;
                 }
             }
+        }
+    }
+    return NULL;
+}
+
+int sllQuery(SLList *l, void *key, int (*cmp) (void*, void*)) {
+    SLNode *spec;
+    int stat;
+
+    if (l != NULL) {
+        if (l->first != NULL) {
+            spec = l->first;
+            stat = cmp(key, spec->data);
+            while (stat != TRUE && spec->next != NULL) {
+                spec = spec->next;
+                stat = cmp(key, spec->data);
+            }
+            if (stat == TRUE) {
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
+}
+
+void *sllGetFirst(SLList *l) {
+    if (l != NULL) {
+        if (l->first != NULL) {
+            l->current = l->first;
+            return (l->first)->data;
+        }
+    }
+    return NULL;
+}
+
+void *sllGetNext(SLList *l) {
+    if (l != NULL) {
+        if (l->current != NULL && l->current->next != NULL) {
+            l->current = (l->current)->next;
+            return (l->current)->data;
         }
     }
     return NULL;

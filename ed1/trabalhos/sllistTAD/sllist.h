@@ -24,7 +24,7 @@ SLList *sllCreate();
 int sllDestroy(SLList *l);
 
 /*Determina se a lista está vazia ou não*/
-int sllIsEmpty(SLList *l);
+int sllEmpty(SLList *l);
 
 /*Determina tamanho da lista*/
 int sllSize(SLList *l);
@@ -52,5 +52,14 @@ void *sllRemoveAfterSpec(SLList *l, void *key, int (*cmp) (void*, void*));
 
 /*Remove antes de spec*/
 void *sllRemoveBeforeSpec(SLList *l, void *key, int (*cmp) (void*, void*));
+
+/*Procura por Query na lista*/
+int sllQuery(SLList *l, void *key, int (*cmp) (void*, void*));
+
+/*Primeira iteração da lista*/
+void *sllGetFirst(SLList *l);
+
+/*Iteração dos próximos nós da lista*/
+void *sllGetNext(SLList *l);
 
 #endif
