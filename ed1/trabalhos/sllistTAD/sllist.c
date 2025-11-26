@@ -34,10 +34,18 @@ int sllDestroy(SLList *l) {
 }
 
 int sllEmpty(SLList *l) {
+    SLNode *spec, *next;
     if (l != NULL) {
         if (l->first != NULL) {
-            free(l->first);
+            spec = l->first;
+    
+            while (spec != NULL) {
+                next = spec->next;
+                free(spec);
+                spec = next;
+            }
             l->first = NULL;
+
             return TRUE;
         }
     }
@@ -59,20 +67,6 @@ int sllSize(SLList *l) {
         }
     }
     return 0;
-}
-
-int sllInsertAsFirst(SLList *l, void *data) {
-    SLNode *newnode;
-    if (l != NULL) {
-        newnode = (SLNode*) malloc(sizeof(SLNode));
-        if (newnode != NULL) {
-            newnode->data = data;
-            newnode->next = l->first;
-            l->first = newnode;
-            return TRUE;
-        }
-    }
-    return FALSE;
 }
 
 int sllInsertAsLast(SLList *l, void *data) {
@@ -99,65 +93,6 @@ int sllInsertAsLast(SLList *l, void *data) {
     return FALSE;
 }
 
-int sllInsertAfterSpec(SLList *l, void *key, int (*cmp) (void*, void*), void *data) {
-    SLNode *newnode, *spec;
-    int stat;
-
-    if (l != NULL) {
-        if (l->first != NULL) {
-            spec = l->first;
-            stat = cmp(key, spec->data);
-            while(stat != TRUE && spec->next != NULL) {
-                spec = spec->next;
-                stat = cmp(key, spec->data);
-            }
-            if(stat == TRUE) {
-                newnode = (SLNode*) malloc(sizeof(SLNode));
-                if (newnode != NULL) {
-                    newnode->data = data;
-                    newnode->next = spec->next;
-                    spec->next = newnode;
-                    return TRUE;
-                }
-            }
-        } 
-    }
-    return FALSE;
-}
-
-int sllInsertBeforeSpec(SLList *l, void *key, int (*cmp) (void*, void*), void *data) {
-    SLNode *spec, *newnode, *prev;
-    int stat;
-
-    if (l != NULL) {
-        if (l->first != NULL) {
-            prev = NULL;
-            spec = l->first;
-            stat = cmp(key, spec->data);
-            while(stat != TRUE && spec->next != NULL) {
-                prev = spec;
-                spec = spec->next;
-                stat = cmp(key, spec->data);
-            }
-            if (stat == TRUE) {
-                newnode = (SLNode*) malloc(sizeof(SLNode));
-                if (newnode != NULL) {
-                    newnode->data = data;
-                    newnode->next = spec;
-                    if (prev != NULL) {
-                        prev->next = newnode;
-                    }
-                    else { // se prev for NULL, é pq spec é o primeiro elemento., e agora será o segundo
-                        l->first = newnode;
-                    }
-                    return TRUE;
-                }
-            }
-        }
-    }
-    return FALSE;
-}
-
 void *sllRemoveSpec(SLList *l, void *key, int (*cmp) (void*, void*)) {
     SLNode *spec, *prev;
     void *data;
@@ -170,7 +105,7 @@ void *sllRemoveSpec(SLList *l, void *key, int (*cmp) (void*, void*)) {
             while (stat != TRUE && spec->next != NULL) {
                 prev = spec;
                 spec = spec->next;
-                cmp(key, spec->data);
+                stat = cmp(key, spec->data);
             }
             if (stat == TRUE) {
                 if (prev != NULL) {
@@ -204,67 +139,6 @@ void *sllRemoveFirst(SLList *l) {
     return NULL;
 }
 
-void *sllRemoveAfterSpec(SLList *l, void *key, int (*cmp) (void*, void*)) {
-    void *data;
-    int stat;
-    SLNode *spec, *next;
-
-    if (l != NULL) {
-        if (l->first != NULL) {
-            spec = l->first;
-            stat = cmp(key, spec->data);
-            while (stat != TRUE && spec->next != NULL) {
-                spec = spec->next;
-                stat = cmp(key, spec->data);
-            }
-            if (stat == TRUE) {
-                next = spec->next;
-                if (next != NULL) { //só posso remover o proximo se existir o proximo
-                    data = next->data;
-                    spec->next = next->next;
-                    free(next);
-                    return data;
-                }
-            }
-        }
-    }
-    return NULL;
-}
-
-void *sllRemoveBeforeSpec(SLList *l, void *key, int (*cmp) (void*, void*)) {
-    void *data;
-    int stat;
-    SLNode *spec, *prev, *beforePrev;
-
-    if (l != NULL) {
-        if (l->first != NULL) {
-            spec = l->first;
-            beforePrev = NULL;
-            prev = NULL;
-            stat = cmp(key, spec->data);
-            while (stat != TRUE && spec->next != NULL) {
-                beforePrev = prev;
-                prev = spec;
-                spec = spec->next;
-                stat = cmp(key, spec->data);
-            }
-            if (stat == TRUE) {
-                if (prev != NULL) { //so podemos remover o anterior se o anterior existir
-                    data = prev->data;
-                    if (beforePrev != NULL) {
-                        beforePrev->next = spec;
-                    }
-                    else {
-                        l->first = spec; // se chegou aqui, significa que spec é, obrigatoriamente, o segundo elemento da lista, e agora será o primeiro
-                    }
-                    free(prev);
-                    return data;
-                }
-            }
-        }
-    }
-    return NULL;
-}
 
 int sllQuery(SLList *l, void *key, int (*cmp) (void*, void*)) {
     SLNode *spec;

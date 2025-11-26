@@ -73,7 +73,7 @@ int main() {
                     scanf("%f", &(jogo->notaSteam));
 
                     
-                    result = sllInsertAsFirst(jogos, jogo);
+                    result = sllInsertAsLast(jogos, jogo);
                     if (result) {
                         printf("\n>>>>>>>>>>Jogo Inserido com Sucesso!<<<<<<<<<<\n");
                     }
@@ -98,7 +98,7 @@ int main() {
                 printf("Digite o nome do jogo que deseja remover: ");
                 scanf("%100[^\n]", jogoRemover);
 
-                jogoRemovido = sllRemoveSpec(jogos, (void*) &jogoRemover, cmp);
+                jogoRemovido = sllRemoveSpec(jogos, (void*) jogoRemover, cmp);
 
                 if (jogoRemovido != NULL) {
                     printf("\n>>>>>>>>>>Jogo removido com sucesso: <<<<<<<<<<");
@@ -149,7 +149,7 @@ int main() {
                     printf("-------------------------------------------------------------------------------\n");
                 }
                 else {
-                printf("A colecao esta vazia\n");
+                printf("A lista esta vazia\n");
                 }
             }
         }
@@ -161,7 +161,7 @@ int main() {
                 result = sllEmpty(jogos);
 
                 if (result == TRUE) {
-                    printf("\n>>>>>>>>>>A lista esvaziada<<<<<<<<<<\n");
+                    printf("\n>>>>>>>>>>A lista foi esvaziada<<<<<<<<<<\n");
                 }
                 else {
                     printf("\n>>>>>>>>>>Falha ao esvaziar lista!<<<<<<<<<<\n");
@@ -177,6 +177,7 @@ int main() {
 
                 if (result == TRUE) {
                     printf("\n>>>>>>>>>>Lista destruida com sucesso<<<<<<<<<<\n");
+                    jogos = NULL;
                 }
                 else {
                     printf("\n>>>>>>>>>>A Lista precisa estar vazia<<<<<<<<<<\n");
@@ -190,6 +191,7 @@ int main() {
     }
 
     if (jogos != NULL) {
+        sllEmpty(jogos);
         sllDestroy(jogos);
     }
 
