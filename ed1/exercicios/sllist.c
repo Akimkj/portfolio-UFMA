@@ -373,22 +373,19 @@ int InverteLista(SLlist *l1) {
             prev = NULL; 
             next = spec->next;
             while (spec != NULL) {
-                next = spec->next;
                 spec->next = prev;
                 prev = spec;
                 spec = next;
                 if (next != NULL) {
                     next = next->next;
                 }
-                else {
-                    l1->first = prev;
-                }
             }
+            l1->first = prev;
             return TRUE;
         }
     }
     return FALSE;
-}
+} 
 
 
 #endif

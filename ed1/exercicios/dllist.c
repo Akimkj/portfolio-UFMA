@@ -227,7 +227,7 @@ int cdllInsertBeforeSpec(DLList *l, void *key, int (*cmp)(void*,void*), void *da
 }
 
 
-int InverteLista(DLList *l1) {
+/*int InverteLista(DLList *l1) {
     DLNode *spec, *prev, *next;
 
     if (l1 != NULL) {
@@ -249,6 +249,36 @@ int InverteLista(DLList *l1) {
                     l1->first = prev;
                 }
             }
+            return TRUE;
+        }
+    }
+    return FALSE;
+}*/
+
+
+
+/*Inverter lista numa ddlist - TESTADO*/
+int InverteLista(DLList *l1) {
+    DLNode *spec, *prev, *next;
+
+    if (l1 != NULL) {
+        if (l1->first != NULL) {
+            spec = l1->first;
+            prev = spec->prev;
+            
+            while (spec->next != NULL) {
+                next = spec->next;
+
+                spec->prev = next;
+                spec->next = prev;
+
+                prev = spec;
+                spec = next;
+            }
+            next = spec->next;
+            spec->prev = next;
+            spec->next = prev;
+            l1->first = spec;
             return TRUE;
         }
     }
