@@ -364,5 +364,31 @@ void *sllGetNext(SLlist *l) {
     return NULL;
 }
 
+int InverteLista(SLlist *l1) {
+    SLnode *prev, *spec, *next;
+
+    if (l1 != NULL) {
+        if (l1->first != NULL) {
+            spec = l1->first;
+            prev = NULL; 
+            next = spec->next;
+            while (spec != NULL) {
+                next = spec->next;
+                spec->next = prev;
+                prev = spec;
+                spec = next;
+                if (next != NULL) {
+                    next = next->next;
+                }
+                else {
+                    l1->first = prev;
+                }
+            }
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 
 #endif

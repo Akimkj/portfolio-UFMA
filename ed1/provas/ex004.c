@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "stack.h"
 
+
 /*
 Escreva um algoritmo que recebe uma matriz de numeros inteiros, com n linhas e m colunas, armazenadas no vetor v, e usa o TAD Stack para inverter os primeiros m elementos da linha l da matriz.
 int InverteOrdemElementosLinhaK(int *v, int n, int l);

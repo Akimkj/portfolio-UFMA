@@ -226,4 +226,33 @@ int cdllInsertBeforeSpec(DLList *l, void *key, int (*cmp)(void*,void*), void *da
     return FALSE;
 }
 
+
+int InverteLista(DLList *l1) {
+    DLNode *spec, *prev, *next;
+
+    if (l1 != NULL) {
+        if (l1->first != NULL) {
+            spec = l1->first;
+            next = spec->next;
+            while (spec != NULL) {
+                prev = spec->prev;
+
+                spec->prev = next;
+                spec->next = prev;
+
+
+                spec = next;
+                if (next != NULL) {
+                    next = next->next;
+                }
+                else {
+                    l1->first = prev;
+                }
+            }
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 #endif
