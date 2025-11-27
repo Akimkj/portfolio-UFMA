@@ -10,7 +10,7 @@ typedef struct _slnode_ {
 }SLnode;
 
 typedef struct _sllist_ {
-    SLnode *first;
+    SLnode *first, *current;
 }SLlist;
 
 SLlist *sllCreate() {
@@ -344,6 +344,25 @@ int csllInsertBeforeSpec(SLlist *l, void *key, int  (*cmp) (void*, void*), void 
     return FALSE;
 }
 
+void *sllGetFirst(SLlist *l) {
+    if (l != NULL) {
+        if (l->first != NULL) {
+            l->current = l->first;
+            return (l->first)->data;
+        }
+    }
+    return NULL;
+}
+
+void *sllGetNext(SLlist *l) {
+    if (l != NULL) {
+        if (l->current != NULL && l->current->next != NULL) {
+            l->current = (l->current)->next;
+            return (l->current)->data;
+        }
+    }
+    return NULL;
+}
 
 
 #endif

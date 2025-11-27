@@ -36,6 +36,10 @@ void *sllRemoveAfterSpec(SLlist *l, void *key, int (*cmp) (void*, void*)); // 3 
 
 void *sllRemoveBeforeSpec(SLlist *l, void *key, int (*cmp) (void*, void*)); // 4 - da lista de exercício 2
 
+int csllInsertBeforeSpec(SLlist *l, void *key, int  (*cmp) (void*, void*), void *data);
 
+void *sllGetFirst(SLlist *l);
+
+void *sllGetNext(SLlist *l);
 
 #endif
