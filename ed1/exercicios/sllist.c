@@ -388,4 +388,40 @@ int InverteLista(SLlist *l1) {
 } 
 
 
+
+/*Escreva um algoritmo para remover um nó especificado de uma lista
+linear simplesmente encadeda se ele for de ordem par.*/
+void *RemovelmparSpec (SLlist *l, void *key, int (*cmp)( void*, void*)) {
+    SLnode *spec, *prev;
+    int stat, order;
+    void *data;
+
+    if (l != NULL) {
+        if (l->first != NULL) {
+            prev = NULL;
+            spec = l->first;
+            order = 1;
+            stat = cmp(key, spec->data);
+            while (spec->next != NULL && stat != TRUE) {
+                prev = spec;
+                spec = spec->next;
+                order++;
+                stat = cmp(key, spec->data);
+            }
+            if (stat == TRUE && order % 2 == 0) {
+                if (prev != NULL) {
+                    prev->next = spec->next;
+                }
+                else {
+                    l->first = spec->next;
+                }
+                data = spec->data;
+                free(spec);
+                return data;
+            }
+        } 
+    }
+    return NULL;
+}
+
 #endif
