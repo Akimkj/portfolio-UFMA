@@ -285,4 +285,64 @@ int InverteLista(DLList *l1) {
     return FALSE;
 }
 
+
+/*União de duas listas (com repetição)*/
+DLList *UniaoLista(DLList *l1, DLList *l2) {
+    DLNode *spec1;
+
+    if (l1 != NULL && l2 != NULL) {
+        if (l1->first == NULL) {
+            return l2;
+        }
+        if (l2->first == NULL) {
+            return l1;
+        }
+
+        spec1 = l1->first;
+
+
+        while (spec1->next != NULL) {
+            spec1 = spec1->next;
+        }
+
+        (l2->first)->prev = spec1;
+        spec1->next = l2->first;
+
+        return l1;
+    }
+    return NULL;
+}
+
+DLList *CortarLista(DLList *l1, void *key, int (*cmp)(void*,void*)) {
+    DLList *l2;
+    DLNode *spec;
+    int stat;
+
+    if (l1 != NULL) {
+        if (l1->first != NULL) {
+            spec = l1->first;
+            stat = cmp(key, spec->data);
+            while (spec->next != NULL && stat != TRUE) {
+                spec = spec->next;
+                stat = cmp(key, spec->data);
+            }
+            if (stat == TRUE) {
+                l2 = (DLList*) malloc(sizeof(DLList));
+                if (l2 != NULL) {
+                    if (spec->next != NULL) {
+                        l2->first = spec->next;
+                        (l2->first)->prev = NULL;
+                    }
+                    else {
+                        l2->first = NULL;
+                    }
+                    spec->next = NULL;
+                    return l2;
+                }
+            }
+        }
+    }
+    return NULL;
+}
+
 #endif
