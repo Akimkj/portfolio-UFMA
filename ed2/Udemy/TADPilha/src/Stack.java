@@ -1,69 +1,55 @@
 import java.util.ArrayList;
 
-public class Stack {
-    private int tamMax;
-    private int top;
-    private int[] list;
-    private int repetir;
+/*
+Nesta implementação, o TAD Stack depende quase totalmente da classe ArrayList para realizar suas operações. No entanto, a complexidade deste algoritmo torna-se ocasionalmente O(n), pois para cada vez que o espaço reservado na memória precisa ser expandido, a classe ArrayList cria um novo vetor/espaço maior e realoca todos esses dados para esse novo espaço.
 
-    public Stack(int tamanho, int podeRepetir) {
-        this.tamMax = tamanho;
-        if (tamanho <= 0) {
-            this.tamMax = 1;
-        }
-        this.top = -1;
-        this.list = new int[this.tamMax];
-        this.repetir = podeRepetir;
+
+A outra forma (e mais perfomatica) de implementar o TAD Stack é por meio de uma Lista Encadeada.
+*/
+
+public class Stack<E> {
+    private final ArrayList<E> pilha;
+
+    public Stack() {
+        pilha = new ArrayList<>();
     }
 
-    public boolean push(int elem) {
-        if (this.isFull() || !this.getPosSpec(elem).isEmpty() && this.repetir == 0) {
-            return false;  
-        }
-        this.top++;
-        this.list[this.top] = elem;
-        return true;
+    public E push(E elem) {
+        pilha.add(elem);
+        
+        return elem;
     }
 
-    public Integer pop() {
+    public E pop() {
         if (this.isEmpty()) {
-            return null;
+            throw new RuntimeException("Pilha está vazia. Não há o que desempilhar.");
         }
-        int aux = this.list[this.top];
-        this.top--;
+        E aux = this.peek();
+        this.pilha.remove(this.size() - 1);
         return aux;
     }
 
-    public int getQuant() {
+    public E peek() {
+        if (this.isEmpty()) {
+            throw new RuntimeException("Pilha está vazia. Não há o que espiar.");
+        }
+        int top = this.size() - 1;
+        return this.pilha.get(top);
+    }
+
+    public int size() {
+        return this.pilha.size();
+        /*
         return this.top + 1;
-    }
-
-    public int getTop() {
-        return this.top;
-    }
-
-    public ArrayList<Integer> getPosSpec(int item) {
-        ArrayList<Integer> poss = new ArrayList<>();
-        for (int i = 0; i <= this.top; i++) {
-            if (this.list[i] == item) {
-                poss.add(i);
-            }
-        }
-        return poss;
-    }
-
-
-    public void print() {
-        for (int i = this.top; i >= 0; i--) {
-            System.out.println(this.list[i]);
-        }
-    }
-
-    public boolean isFull() {
-        return this.top == this.tamMax - 1;
+        */
     }
 
     public boolean isEmpty() {
-        return this.top == -1;
+        return this.pilha.isEmpty();
+        /*
+        return this.top == -1; 
+        or 
+        return this.pilha.size() == 0;
+        */
     }
 }
