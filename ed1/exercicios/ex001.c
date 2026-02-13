@@ -3,12 +3,12 @@
 #define FALSE 0
 
 int strSubString(char *sub, char *str, int nsub, int nstr) {
-     int i = 0, j = 0;
+    int i = 0, j = 0;
     if (sub ==  NULL || str == NULL) {
         return FALSE;
     } 
 
-    if (nsub > 0 && nstr > 0 && nsub < nstr) {
+    if (nsub > 0 && nstr > 0 && nsub <= nstr) {
         while (nstr > i && nsub > j) {
             while(sub[j] != str[i]) { 
                 i++;
