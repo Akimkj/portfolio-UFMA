@@ -35,7 +35,8 @@ public class AppFL {
             System.out.println("0 - encerrar");
             System.out.println("1 - inserir elemento (no final)");
             System.out.println("2 - extrair elemento (do inicio)");
-            System.out.println("3 - imprimir elementos da lista (sentido inicio -> fim)");
+            System.out.println("3 - pegar ultimo elemento da lista");
+            System.out.println("4 - Tamanho da lista");
             System.out.println("");
             System.out.print("Opcao -> ");
             int opc = scn.nextInt();
@@ -62,6 +63,16 @@ public class AppFL {
                     System.out.print("\nNome ---> " + e.getNome());
                     System.out.print("\nNumero -> " + e.getNumero());
                 }
+            } else if (opc == 3) {
+                Elemento e = ll.getLast();
+                if (e == null) {
+                    System.out.println("A Lista esta' vazia!!");
+                } else {
+                    System.out.println("O ultimo elemento e: " + e.nome);
+                }
+            } else if (opc == 4) {
+                int size = ll.size();
+                System.out.println("O tamanho da lista e: " + size);
             }
         }
 
