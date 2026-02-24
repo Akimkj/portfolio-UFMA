@@ -5,19 +5,23 @@ public class BinaryTree<E> {
         private E data;
         private Node<E> left;
         private Node<E> right;
+        private int height;
 
         Node(int id, E data) {
             this.id = id;
             this.data = data;
             this.left = null;
             this.right = null;
+            this.height = 0;
         }
     }
 
     private Node<E> root;
+    private int qtd;
 
     public BinaryTree() {
         this.root = null;
+        this.qtd = 0;
     }
 
     private Node<E> searchNode(Node<E> root, int id) {
@@ -54,11 +58,12 @@ public class BinaryTree<E> {
         return null;
     }
 
-    /*public boolean add(int id, E data) {
+    public boolean add(int id, E data) {
         Node<E> newNode = new Node<>(id, data);
 
         if (this.root == null) {
             this.root = newNode;
+            this.qtd++;
             return true;
         }
 
@@ -70,22 +75,25 @@ public class BinaryTree<E> {
             else if (current.id > id) {
                 if (current.left == null) {
                     current.left = newNode;
+                    this.qtd++;
                     return true;
                 }
                 current = current.left;
             } else {
                 if (current.right == null) {
                     current.right = newNode;
+                    this.qtd++;
                     return true;
                 }
                 current = current.right;
             }
         }
         return false;
-    }*/
+    }
 
-    public boolean add(int id, E data) {
+    public boolean addRecursive(int id, E data) {
         this.root = addRecursive(this.root, id, data);
+        this.qtd++;
         return true;
     }
 
@@ -102,10 +110,10 @@ public class BinaryTree<E> {
             root.data = data;
         }
 
-        return root;
+        return rebalance(root);
     }
 
-    public E delete(int id) {
+    public E deleteRecursive(int id) {
         Node<E> target = searchNode(this.root, id);
 
         if (target == null) {
@@ -114,8 +122,8 @@ public class BinaryTree<E> {
         E data = target.data;
 
         this.root = deleteRecursive(this.root, id);
+        this.qtd--;
         return data;
-
     }
 
     private Node<E> deleteRecursive(Node<E> root, int id) {
@@ -129,22 +137,26 @@ public class BinaryTree<E> {
             root.right = deleteRecursive(root.right, id);
         } else {
             if (root.left == null) {
-                return root.right;
+                root = root.right;
             } else if (root.right == null) {
-                return root.left;
+                root = root.left;
+            } else {
+                Node<E> sucessor = findMin(root.right);
+
+                root.right = deleteRecursive(root.right, sucessor.id);
+
+                sucessor.right = root.right;
+                sucessor.left = root.left;
+
+                root = sucessor;
             }
-
-            Node<E> sucessor = findMin(root.right);
-
-            root.right = deleteRecursive(root.right, sucessor.id);
-
-            sucessor.right = root.right;
-            sucessor.left = root.left;
-
-            return sucessor;
         }
-
-        return root;
+        
+        if (root == null) {
+            return null;
+        }
+        
+        return rebalance(root);
     }
 
     private Node<E> findMin(Node<E> current) {
@@ -152,5 +164,139 @@ public class BinaryTree<E> {
             current = current.left;
         }
         return current;
+    }
+
+    private void imprimirPreOrdem(Node<E> root) {
+        if (root != null) {
+            Elemento e = (Elemento) root.data;
+            System.out.println("ID: " + e.getNumero() + " | NOME: " + e.getNome());
+            imprimirPreOrdem(root.left);
+            imprimirPreOrdem(root.right);
+        }
+    }
+
+    public void preOrdem() {
+        imprimirPreOrdem(this.root);
+    }
+
+    private void imprimirPosOrdem(Node<E> root) {
+        if (root != null) {
+            imprimirPosOrdem(root.left);
+            imprimirPosOrdem(root.right);
+            Elemento e = (Elemento) root.data;
+            System.out.println("ID: " + e.getNumero() + " | NOME: " + e.getNome());
+        }
+    }
+
+    public void posOrdem() {
+        imprimirPosOrdem(this.root);
+    }
+
+    private void imprimirSimetrico(Node<E> root) {
+        if (root != null) {
+            imprimirSimetrico(root.left);
+            Elemento e = (Elemento) root.data;
+            System.out.println("ID: " + e.getNumero() + " | NOME: " + e.getNome());
+            imprimirSimetrico(root.right);
+        }
+    }
+
+    public void simetrico() {
+        imprimirSimetrico(this.root);
+    }
+
+    public int getQtd() {
+        return this.qtd;
+    }
+
+    public E getRaiz() {
+        if (this.root == null) {
+            return null;
+        }
+        return this.root.data;
+    }
+
+
+    private int height(Node<E> node) {
+        if (node == null) {
+            return -1;
+        }
+        return node.height;
+    }
+
+    private int getBalanceFactor(Node<E> node) {
+        if (node == null) {
+            return 0;
+        }
+        return height(node.right) - height(node.left);
+    }
+
+    private void updateHeight(Node<E> node) {
+        int hLeft = height(node.left);
+        int hRight = height(node.right);
+        
+        if (hLeft > hRight) {
+            node.height = hLeft + 1;
+        } else {
+            node.height = hRight + 1;
+        }
+    }
+
+
+    private Node<E> rotateLeft(Node<E> x) {
+        Node<E> y = x.right;
+        Node<E> T2 = y.left;
+
+        y.left = x;
+        x.right = T2;
+
+        updateHeight(x);
+        updateHeight(y);
+
+        return y;
+    }
+
+    private Node<E> rotateRight(Node<E> x) {
+        Node<E> y = x.left;
+        Node<E> T2 = y.right;
+
+        y.right = x;
+        x.left = T2;
+
+        updateHeight(x);
+        updateHeight(y);
+
+        return y;
+    }
+
+    private Node<E> rotateDoubleLeft(Node<E> x) {
+        x.right = rotateRight(x.right);
+        return rotateLeft(x);
+    }
+
+    private Node<E> rotateDoubleRight(Node<E> x) {
+        x.left = rotateLeft(x.left);
+        return rotateRight(x);
+    }
+
+    private Node<E> rebalance(Node<E> node) {
+        updateHeight(node);
+        int balance = getBalanceFactor(node);
+
+        if (balance  < -1) {
+            if (getBalanceFactor(node.right) > 0) {
+                return rotateDoubleRight(node);
+            }
+            return rotateRight(node);
+        }
+
+        if (balance > 1) {
+            if (getBalanceFactor(node.left) < 0) {
+                return rotateDoubleLeft(node);
+            }
+            return rotateLeft(node);
+        }
+
+        return node;
     }
 }
