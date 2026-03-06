@@ -19,6 +19,8 @@ public class App {
             System.out.println("2 - ordenar com Bubble");
             System.out.println("3 - ordenar com Insertion");
             System.out.println("4 - ordenar com Selection");
+            System.out.println("5 - ordenar com Merge");
+            System.out.println("6 - ordenar com Quick");
             System.out.println("====================================================");
             System.out.print("\nOpcao -> ");
             int opc = scn.nextInt();
@@ -35,10 +37,16 @@ public class App {
                 dados = insertion(dados);
             } else if (opc == 4) {
                 dados = selection(dados);
+            } else if (opc == 5) {
+                mergeSort(dados);
+            } else if (opc == 6) {
+                int high = dados.length -1;
+                quickSort(dados, 0, high);
             }
 
         }
 
+        scn.close();
     }
 
     /*
@@ -117,4 +125,95 @@ public class App {
 
         return v;
     }
+
+
+    public static void mergeSort(int[] array)
+	{
+		if(array == null)
+		{
+			return;
+		}
+
+		if(array.length > 1)
+		{
+			int mid = array.length / 2;
+
+			// Split left part
+			int[] left = new int[mid];
+			for(int i = 0; i < mid; i++)
+			{
+				left[i] = array[i];
+			}
+			
+			// Split right part
+			int[] right = new int[array.length - mid];
+			for(int i = mid; i < array.length; i++)
+			{
+				right[i - mid] = array[i];
+			}
+			mergeSort(left);
+			mergeSort(right);
+
+			int i = 0, j = 0, k = 0;
+
+			// Merge left and right arrays
+			while(i < left.length && j < right.length)
+			{
+				if(left[i] < right[j])
+				{
+					array[k] = left[i];
+					i++;
+				}
+				else
+				{
+					array[k] = right[j];
+					j++;
+				}
+				k++;
+			}
+			// Collect remaining elements
+			while(i < left.length)
+			{
+				array[k] = left[i];
+				i++;
+				k++;
+			}
+			while(j < right.length)
+			{
+				array[k] = right[j];
+				j++;
+				k++;
+			}
+		}
+	}
+
+    private static int partition(int[] arr, int low, int high) {
+        
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j <= high -1; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    int temp = arr[i+1];
+    arr[i+1] = arr[high];
+    arr[high] = temp;
+
+    return i +1;
+}
+
+    public static void quickSort(int[] arr, int low, int high) {
+    if (low >= high) return;
+
+    int p = partition(arr, low, high);
+
+    quickSort(arr, low, p -1);
+    quickSort(arr, p + 1, high);
+}
 }
