@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "AGjava",
+            "request": "launch",
+            "mainClass": "AGjava",
+            "projectName": "TADBinaryTree_a59078db"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}
