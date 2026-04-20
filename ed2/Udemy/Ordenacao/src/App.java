@@ -67,7 +67,7 @@ public class App {
         int vetor[] = new int[tam];
 
         for (int i = 0; i < tam; i++) {
-            int num = gerador.nextInt(10000000);
+            int num = gerador.nextInt(14);
             vetor[i] = num;
         }
 
@@ -117,19 +117,21 @@ public class App {
     }
 
     private static int[] selection(int[] v) {
-        int valMenor, idxValMenor;
+        int min, temp;
 
-        for (int i = 0; i < v.length; i++) {
-            valMenor = v[i];
-            idxValMenor = i;
+        for (int i = 0; i < v.length - 1; i++) {
+            min = i;
             for (int j = i + 1; j < v.length; j++) {
-                if (v[j] < valMenor) {
-                    valMenor = v[j];
-                    idxValMenor = j;
+                if (v[j] < v[min]) {
+                    min = j;
                 }
             }
-            v[idxValMenor] = v[i];
-            v[i] = valMenor; 
+            while (min > i && v[min-1] > v[min]) {
+                temp = v[min];
+                v[min] = v[min-1];
+                v[min-1] = temp;
+                min--;
+            }
         }
 
         return v;
