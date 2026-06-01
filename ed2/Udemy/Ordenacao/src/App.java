@@ -133,7 +133,6 @@ public class App {
                 min--;
             }
         }
-
         return v;
     }
 
