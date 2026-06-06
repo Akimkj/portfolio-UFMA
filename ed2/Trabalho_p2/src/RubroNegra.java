@@ -141,15 +141,182 @@ public class RubroNegra<AnyType> {
         while (z.pai.cor == RubroNegra.RED) {
             if (z.pai == z.pai.pai.esquerdo) {
                 NoRN<AnyType> y = z.pai.irmao;
-                if (y.cor == RubroNegra.RED) {
+                if (y.cor == RubroNegra.RED) { //caso 1
+                    z.pai.cor = RubroNegra.BLACK;
+                    y.cor = RubroNegra.BLACK;
+                    z.pai.pai.cor = RubroNegra.RED;
+                    z = z.pai.pai;
+                } else {
+                    if (z == z.pai.direito) { //caso 2
+                        z = z.pai;
+                        LEFT_ROTATE(z);
+                    }
+                    //caso 3
+                    z.pai.cor = RubroNegra.BLACK;
+                    z.pai.pai.cor = RubroNegra.RED;
+                    RIGHT_ROTATE(z.pai.pai);
+                }
+            } else {
+                NoRN<AnyType> y = z.pai.irmao;
+                if (y.cor == RubroNegra.RED) { //caso 1
                     z.pai.cor = RubroNegra.BLACK;
                     y.cor = RubroNegra.BLACK;
                     y.pai.cor = RubroNegra.RED;
                     z = y.pai;
+                } else {
+                    if (z == z.pai.esquerdo) { //caso 2
+                        z = z.pai;
+                        RIGHT_ROTATE(z);
+                    }
+                    //caso 3
+                    z.pai.cor = RubroNegra.BLACK;
+                    z.pai.pai.cor = RubroNegra.RED;
+                    LEFT_ROTATE(z.pai.pai);
                 }
-            } else {
-                //repetir acima mas troca direita <-> esquerda
             }
         }
+        this.root.cor = RubroNegra.BLACK;
     }
-}
+
+    public AnyType remove(int codigo) {
+        NoRN<AnyType> spec = RB_SEARCH(codigo);
+        if (spec != this.Nil) {
+            return RB_DELETE(spec);
+        }
+        return this.Nil.elemento;
+    }
+
+    private AnyType RB_DELETE(NoRN<AnyType> z) {
+        NoRN<AnyType> y, x;
+        if (z.esquerdo == this.Nil || z.direito == this.Nil) {
+            y = z;
+        } else {
+            y = TREE_SUCESSOR(z);
+        }
+
+        if (y.esquerdo != this.Nil) {
+            x = y.esquerdo;
+        } else {
+            x = y.direito;
+        }
+        x.pai = y.pai;
+        if (y.pai == this.Nil) {
+            this.root = x;
+        } else if (y == y.pai.esquerdo) {
+            y.pai.esquerdo = x;
+            x.irmao = y.irmao;
+            if (x.irmao != this.Nil) {
+                x.irmao.irmao = x;
+            }
+        } else {
+            y.pai.direito = x;
+            x.irmao = y.irmao;
+            if (x.irmao != this.Nil) {
+                x.irmao.irmao = x;
+            }
+        }
+
+        if (y != z) {
+            z.codigo = y.codigo;
+            z.elemento = y.elemento;
+        }
+        if (y.cor == RubroNegra.BLACK) {
+            RB_DELETE_FIXUP(x);
+        }
+        return y.elemento;
+    }
+
+    private void RB_DELETE_FIXUP(NoRN<AnyType> x) {
+        while (x != this.root && x.cor == RubroNegra.BLACK) {
+            if (x == x.pai.esquerdo) {
+                NoRN<AnyType> w = x.irmao;
+                if (w.cor == RubroNegra.RED) {
+                    w.cor = RubroNegra.BLACK;
+                    x.pai.cor = RubroNegra.RED;
+                    LEFT_ROTATE(x.pai);
+                    w = x.irmao;
+                }
+                if (w.esquerdo.cor == RubroNegra.BLACK && w.direito.cor == RubroNegra.BLACK) {
+                    w.cor = RubroNegra.RED;
+                    x = x.pai;
+                } else {
+                    if (w.direito.cor == RubroNegra.BLACK) {
+                        w.esquerdo.cor = RubroNegra.BLACK;
+                        w.cor = RubroNegra.RED;
+                        RIGHT_ROTATE(w);
+                        w = x.irmao;
+                    } 
+                    w.cor = x.pai.cor;
+                    x.pai.cor = RubroNegra.BLACK;
+                    w.direito.cor = RubroNegra.BLACK;
+                    LEFT_ROTATE(x.pai);
+                    x = this.root;
+                }
+            } else {
+                NoRN<AnyType> w = x.irmao;
+                if (w.cor == RubroNegra.RED) {
+                    w.cor = RubroNegra.BLACK;
+                    x.pai.cor = RubroNegra.RED;
+                    RIGHT_ROTATE(x.pai);
+                    w = x.irmao;
+                }
+                if (w.direito.cor == RubroNegra.BLACK && w.esquerdo.cor == RubroNegra.BLACK) {
+                    w.cor = RubroNegra.RED;
+                    x = x.pai;
+                } else {
+                    if (w.esquerdo.cor == RubroNegra.BLACK) {
+                        w.direito.cor = RubroNegra.BLACK;
+                        w.cor = RubroNegra.RED;
+                        LEFT_ROTATE(w);
+                        w = x.irmao;
+                    } 
+                    w.cor = x.pai.cor;
+                    x.pai.cor = RubroNegra.BLACK;
+                    w.esquerdo.cor = RubroNegra.BLACK;
+                    RIGHT_ROTATE(x.pai);
+                    x = this.root;
+                }
+            }
+        }
+        x.cor = RubroNegra.BLACK;
+    }
+
+    private NoRN<AnyType> TREE_SUCESSOR(NoRN<AnyType> z) {
+        z = z.direito;
+        while (z.esquerdo != this.Nil) {
+            z = z.esquerdo;
+        }
+        return z;
+    }
+
+    public AnyType search(int codigo) {
+        return RB_SEARCH(codigo).elemento;
+    }
+
+    private NoRN<AnyType> RB_SEARCH(int codigo) {
+        NoRN<AnyType> x = this.root;
+        while (x != this.Nil) { 
+            if (codigo == x.codigo) {
+                return x;
+            } else if (codigo < x.codigo) {
+                x = x.esquerdo;
+            } else {
+                x = x.direito;
+            }
+        }
+        return this.Nil;
+    }
+
+    /*Funções auxiliares apenas para ajudar na visualizacao da árvore*/
+    public void printAll() {
+        inOrder(this.root);
+    }
+
+    private void inOrder(NoRN<AnyType> x) {
+        if (x != this.Nil) {
+            inOrder(x.esquerdo);
+            System.out.println(x.codigo + " -> " + x.elemento.toString());
+            inOrder(x.direito);
+        }
+    }
+}   

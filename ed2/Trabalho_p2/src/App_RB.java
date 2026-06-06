@@ -2,19 +2,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-public class App {
- 
+public class App_RB {
     public static void main(String[] args) throws Exception {
-        Tabela_Hash<Funcionario> tabela = new Tabela_Hash<>();
+        RubroNegra<Funcionario> tree = new RubroNegra<>();
         Scanner input = new Scanner(System.in);
 
         while (true) { 
-            System.out.println("Deseja carregar tabela com dados? (1 -> sim | 0 -> não)");
+            System.out.println("Deseja carregar a árvore com dados? (1 -> sim | 0 -> não)");
             int op = input.nextInt();
             if (op != 0 && op != 1) {
                 continue;
             } else if (op == 1) {
-                BufferedReader br = new BufferedReader(new FileReader("dados.txt"));
+                BufferedReader br = new BufferedReader(new FileReader("dados_800.txt"));
                 String linha;
                 linha = br.readLine();
                 while (linha != null) {
@@ -25,7 +24,7 @@ public class App {
                     float salario = Float.parseFloat(elemText[3]);
 
                     Funcionario elem = new Funcionario(nome, idade, salario);
-                    tabela.insert(codigo, elem);
+                    tree.insert(codigo, elem);
                     linha = br.readLine();
                 }
                 br.close();
@@ -47,7 +46,7 @@ public class App {
                 System.out.println("Digite o código do funcionario a inserir: ");
                 int codigo = input.nextInt();
                 Funcionario elem = createFuncionario(input);
-                if (tabela.insert(codigo, elem)) {
+                if (tree.insert(codigo, elem)) {
                     System.out.println("Inserção bem sucedida");
                 } else {
                     System.out.println("Inserção mal sucedida");
@@ -55,29 +54,24 @@ public class App {
             } else if (opc == 2) {
                 System.out.println("Digite o código do funcionario a buscar: ");
                 int codigo = input.nextInt();
-                Funcionario elem = tabela.search(codigo);
+                Funcionario elem = tree.search(codigo);
                 if (elem != null) {
                     System.out.println(elem.toString());
                 } else {
-                    System.out.println("O funcionário não está na tabela.");
+                    System.out.println("O funcionário não está na árvore.");
                 }
             } else if (opc == 3) {
                 System.out.println("Digite o código do funcionario a remover: ");
                 int codigo = input.nextInt();
-                Funcionario elem = tabela.remove(codigo);
+                Funcionario elem = tree.remove(codigo);
                 if (elem != null) {
                     System.out.println("Remoção bem sucedida: ");
                     System.out.println(elem.toString());
                 } else {
-                    System.out.println("Remoção mal sucedida, funcionario nao presente na tabela");
+                    System.out.println("Remoção mal sucedida, funcionario nao presente na Árvore");
                 }
             } else if (opc == 4) {
-                int[] codigos = tabela.entrySet();
-                System.out.println(codigos.length);
-                for (int i = 0; i < codigos.length; i++) {
-                    Funcionario elem = tabela.search(codigos[i]);
-                    System.out.println("Código: " + codigos[i] + " | Nome: " + elem.toString());
-                }
+                tree.printAll();
             } else if (opc == 5) {
                 break;
             }
