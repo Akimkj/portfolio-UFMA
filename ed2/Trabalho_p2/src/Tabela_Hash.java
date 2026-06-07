@@ -1,8 +1,3 @@
-/*
-*TAD da Tabela Hash
-*A estrutura foi baseada conforme os slides da aulas 9 e 10, além do uso do livro: 
-"estruturas de dados, algoritmos, análise da complexidade e implementações em JAVA e C/C++" de Ana Ascencia e Graziela Araújo.
-**/
 public class Tabela_Hash<G> {
     private static class hashNode<G> {
         int codigo;

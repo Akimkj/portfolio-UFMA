@@ -13,9 +13,10 @@ public class App_RB {
             if (op != 0 && op != 1) {
                 continue;
             } else if (op == 1) {
-                BufferedReader br = new BufferedReader(new FileReader("dados_800.txt"));
+                BufferedReader br = new BufferedReader(new FileReader("dados_1M.txt"));
                 String linha;
                 linha = br.readLine();
+                long timeInicial = System.currentTimeMillis();
                 while (linha != null) {
                     String[] elemText = linha.split(",");
                     int codigo = Integer.parseInt(elemText[0]);
@@ -27,8 +28,10 @@ public class App_RB {
                     tree.insert(codigo, elem);
                     linha = br.readLine();
                 }
+                long timeFinal = System.currentTimeMillis();
                 br.close();
                 System.out.println("Inserções bem sucedidas");
+                System.out.println("Tempo: " + (timeFinal - timeInicial) + " ms");
             }
             break;
         }
@@ -54,7 +57,10 @@ public class App_RB {
             } else if (opc == 2) {
                 System.out.println("Digite o código do funcionario a buscar: ");
                 int codigo = input.nextInt();
+                long timeInicial = System.currentTimeMillis();
                 Funcionario elem = tree.search(codigo);
+                long timeFinal = System.currentTimeMillis();
+                System.out.println("Tempo: " + (timeFinal - timeInicial) + " ms");
                 if (elem != null) {
                     System.out.println(elem.toString());
                 } else {
@@ -63,7 +69,10 @@ public class App_RB {
             } else if (opc == 3) {
                 System.out.println("Digite o código do funcionario a remover: ");
                 int codigo = input.nextInt();
+                long timeInicial = System.currentTimeMillis();
                 Funcionario elem = tree.remove(codigo);
+                long timeFinal = System.currentTimeMillis();
+                System.out.println("Tempo: " + (timeFinal - timeInicial) + " ms");
                 if (elem != null) {
                     System.out.println("Remoção bem sucedida: ");
                     System.out.println(elem.toString());
@@ -71,7 +80,17 @@ public class App_RB {
                     System.out.println("Remoção mal sucedida, funcionario nao presente na Árvore");
                 }
             } else if (opc == 4) {
-                tree.printAll();
+                System.out.println("Quer imprimir a árvore em qual ordem?");
+                System.out.println("1 - pre-ordem");
+                System.out.println("2 - Simétrica");
+                System.out.println("3 - Pos-ordem");
+
+                int type = input.nextInt();
+                while (type > 3 || type < 1) {
+                    System.out.println("Digite uma opção válida: ");
+                    type = input.nextInt();
+                }
+                tree.printAll(type);
             } else if (opc == 5) {
                 break;
             }

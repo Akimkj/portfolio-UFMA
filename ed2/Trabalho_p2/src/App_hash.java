@@ -14,9 +14,10 @@ public class App_hash {
             if (op != 0 && op != 1) {
                 continue;
             } else if (op == 1) {
-                BufferedReader br = new BufferedReader(new FileReader("dados.txt"));
+                BufferedReader br = new BufferedReader(new FileReader("dados_1M.txt"));
                 String linha;
                 linha = br.readLine();
+                long timeInicial = System.currentTimeMillis();
                 while (linha != null) {
                     String[] elemText = linha.split(",");
                     int codigo = Integer.parseInt(elemText[0]);
@@ -28,8 +29,10 @@ public class App_hash {
                     tabela.insert(codigo, elem);
                     linha = br.readLine();
                 }
+                long timeFinal = System.currentTimeMillis();
                 br.close();
                 System.out.println("Inserções bem sucedidas");
+                System.out.println("Tempo: " + (timeFinal - timeInicial) + " ms");
             }
             break;
         }
@@ -47,7 +50,10 @@ public class App_hash {
                 System.out.println("Digite o código do funcionario a inserir: ");
                 int codigo = input.nextInt();
                 Funcionario elem = createFuncionario(input);
+                long timeInicial = System.currentTimeMillis();
                 if (tabela.insert(codigo, elem)) {
+                    long timeFinal = System.currentTimeMillis();
+                    System.out.println("Tempo: " + (timeFinal - timeInicial) + " ms");
                     System.out.println("Inserção bem sucedida");
                 } else {
                     System.out.println("Inserção mal sucedida");
@@ -55,7 +61,10 @@ public class App_hash {
             } else if (opc == 2) {
                 System.out.println("Digite o código do funcionario a buscar: ");
                 int codigo = input.nextInt();
+                long timeInicial = System.currentTimeMillis();
                 Funcionario elem = tabela.search(codigo);
+                long timeFinal = System.currentTimeMillis();
+                System.out.println("Tempo: " + (timeFinal - timeInicial) + " ms");
                 if (elem != null) {
                     System.out.println(elem.toString());
                 } else {
@@ -64,7 +73,10 @@ public class App_hash {
             } else if (opc == 3) {
                 System.out.println("Digite o código do funcionario a remover: ");
                 int codigo = input.nextInt();
+                long timeInicial = System.currentTimeMillis();
                 Funcionario elem = tabela.remove(codigo);
+                long timeFinal = System.currentTimeMillis();
+                System.out.println("Tempo: " + (timeFinal - timeInicial) + " ms");
                 if (elem != null) {
                     System.out.println("Remoção bem sucedida: ");
                     System.out.println(elem.toString());

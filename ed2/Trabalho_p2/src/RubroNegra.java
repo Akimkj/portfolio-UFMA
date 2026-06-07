@@ -1,7 +1,7 @@
 public class RubroNegra<AnyType> {
     private static class NoRN<AnyType> {
         AnyType elemento;
-        NoRN<AnyType> pai, esquerdo, direito, irmao;
+        NoRN<AnyType> pai, esquerdo, direito, irmao; //Referência explicita do irmao
         boolean cor;
         int codigo;
 
@@ -32,17 +32,21 @@ public class RubroNegra<AnyType> {
        this.root = this.Nil;
     }
 
+    
+
     private void LEFT_ROTATE(NoRN<AnyType> x) {
         NoRN<AnyType> y = x.direito;
+        NoRN<AnyType> z = x.irmao; //Salva irmao de x
         x.direito = y.esquerdo;
 
+        //atribuição dos novos irmaos dos filhos de x
         if (y.esquerdo != this.Nil) {
             y.esquerdo.pai = x;
             y.esquerdo.irmao = x.esquerdo;
         }
 
         if (x.esquerdo != this.Nil) {
-            x.esquerdo.irmao = y.direito;
+            x.esquerdo.irmao = x.direito;
         }
 
         y.pai = x.pai;
@@ -57,14 +61,22 @@ public class RubroNegra<AnyType> {
         y.esquerdo = x;
         x.pai = y;
 
+        //atualizacao dos irmãos dos nós filhos de y
         x.irmao = y.direito;
         if (y.direito != this.Nil) {
             y.direito.irmao = x;
+        }
+
+        //atualização do irmao de y
+        y.irmao = z;
+        if (z != this.Nil) {
+            z.irmao = y;
         }
     }
 
     private void RIGHT_ROTATE(NoRN<AnyType> x) {
         NoRN<AnyType> y = x.esquerdo;
+        NoRN<AnyType> z = x.irmao;
         x.esquerdo = y.direito;
         
         if (y.direito != this.Nil) {
@@ -92,10 +104,16 @@ public class RubroNegra<AnyType> {
         if (y.esquerdo != this.Nil) {
             y.esquerdo.irmao = x;
         }
+
+        y.irmao = z;
+        if (z != this.Nil) {
+            z.irmao = y;
+        }
     }
 
     public boolean insert(int codigo, AnyType e) {
         NoRN<AnyType> newnode = new NoRN<>(codigo, e);
+
         return RB_INSERT(newnode);
     }
 
@@ -308,15 +326,56 @@ public class RubroNegra<AnyType> {
     }
 
     /*Funções auxiliares apenas para ajudar na visualizacao da árvore*/
-    public void printAll() {
-        inOrder(this.root);
+    public void printAll(int type) {
+        if (type == 1) {
+            preOrder(this.root);
+        } else if (type == 2) {
+            inOrder(this.root);
+        } else {
+            posOrder(this.root);
+        }
+        
+    }
+
+    private void preOrder(NoRN<AnyType> x) {
+        if (x != this.Nil) {
+            String cor;
+            if (x.cor == RubroNegra.BLACK) {
+                cor = "black";
+            } else {
+                cor = "red";
+            }
+            System.out.println(x.codigo + " | " + cor + " -> " + x.elemento.toString());
+            preOrder(x.esquerdo);
+            preOrder(x.direito);
+        }
     }
 
     private void inOrder(NoRN<AnyType> x) {
         if (x != this.Nil) {
             inOrder(x.esquerdo);
-            System.out.println(x.codigo + " -> " + x.elemento.toString());
+            String cor;
+            if (x.cor == RubroNegra.BLACK) {
+                cor = "black";
+            } else {
+                cor = "red";
+            }
+            System.out.println(x.codigo + " | " + cor + " -> " + x.elemento.toString());
             inOrder(x.direito);
+        }
+    }
+
+    private void posOrder(NoRN<AnyType> x) {
+        if (x != this.Nil) {
+            posOrder(x.esquerdo);
+            posOrder(x.direito);
+            String cor;
+            if (x.cor == RubroNegra.BLACK) {
+                cor = "black";
+            } else {
+                cor = "red";
+            }
+            System.out.println(x.codigo + " | " + cor + " -> " + x.elemento.toString());
         }
     }
 }   
